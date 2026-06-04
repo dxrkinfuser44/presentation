@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head></head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>Presentations</title>
+  <style></style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #f9fafb;
+      color: #333;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      color: #111;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      width: 100%;
+    }
+    li {
+      margin: 0.5rem 0;
+    }
+    a {
+      text-decoration: none;
+      color: #0066cc;
+      font-size: 1.1rem;
+      display: block;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    a:hover {
+      background: #e0f0ff;
+      color: #004499;
+    }
+    .footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body></body>
+  <h1></h1>Presentations</h1>
+  <ul id="list"></ul>
+  <script></script>
+    // Fetch the repository contents via GitHub API and list HTML files
+    fetch('https://api.github.com/repos/dxrkinfuser44/presentation/contents/')
+      .then(r => r.json())
+      .then(data => {
+        const list = document.getElementById('list');
+        data
+          .filter(item => item.type === 'file' && item.name.endsWith('.html'))
+          .forEach(item => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = item.name; // relative link
+            a.textContent = item.name.replace('.html', '');
+            li.appendChild(a);
+            list.appendChild(li);
+          });
+      })
+      .catch(err => {
+        console.error('Failed to load presentations', err);
+        document.getElementById('list').textContent = 'Unable to load presentations.';
+      });
+  </script>
+  <div class="footer">Generated automatically – updates when new .html files are added.</div>
+</body>
+</html>
