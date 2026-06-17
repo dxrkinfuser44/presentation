@@ -1,0 +1,35 @@
+{
+  "id": "vite-dashboard",
+  "name": "Vite Dashboard + Auto-Discovery + AI Agent API",
+  "status": "active",
+  "objective": "Build auto-discovering presentation dashboard with AI agent API endpoints",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md",
+    ".opencode/context/core/standards/security-patterns.md"
+  ],
+  "reference_files": [
+    "package.json",
+    "vite.config.ts",
+    "tsconfig.json",
+    "src/main.ts",
+    "index.html",
+    ".github/workflows/static.yml",
+    "html/year10/pdhpe/vaping-presentation.html",
+    "html/year10/science/newtons laws.html"
+  ],
+  "exit_criteria": [
+    "scripts/discover.ts scans html/ and generates public/api/manifest.json, public/llms.txt, public/.well-known/ai-plugin.json",
+    "Both HTML files have correct metadata format on line 2",
+    "index.html serves as dashboard entry with AI routing comments and meta tags",
+    "src/main.ts fetches manifest at runtime and renders presentation cards",
+    "src/style.css provides dark theme with card grid and CSS custom properties",
+    "src/shared/pyodide-runner.ts and src/shared/plotly-live.ts created",
+    "public/robots.txt allows AI crawlers",
+    ".github/workflows/static.yml runs discover and build before deploy",
+    ".gitignore excludes generated public/api/ and public/.well-known/"
+  ],
+  "subtask_count": 11,
+  "completed_count": 0,
+  "created_at": "2026-06-07T00:00:00Z",
+  "completed_at": null
+}

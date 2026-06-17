@@ -1,0 +1,29 @@
+{
+  "id": "vite-dashboard-03",
+  "seq": "03",
+  "title": "Update newtons laws.html metadata format",
+  "status": "pending",
+  "depends_on": ["01"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md"
+  ],
+  "reference_files": [
+    "html/year10/science/newtons laws.html",
+    "scripts/discover.ts"
+  ],
+  "acceptance_criteria": [
+    "Line 2 contains @presentation metadata comment with correct schema",
+    "All required fields present: id, title, subject, year, topic, description, tags, author, version, created, updated, slides, duration, difficulty, libraries, thumbnail",
+    "Metadata is valid JSON that discover.ts can parse",
+    "File still renders correctly as presentation"
+  ],
+  "deliverables": [
+    "html/year10/science/newtons laws.html (updated)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

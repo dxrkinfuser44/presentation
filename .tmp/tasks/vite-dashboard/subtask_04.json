@@ -1,0 +1,34 @@
+{
+  "id": "vite-dashboard-04",
+  "seq": "04",
+  "title": "Create index.html - dashboard entry with AI routing",
+  "status": "pending",
+  "depends_on": ["01"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md"
+  ],
+  "reference_files": [
+    "index.html",
+    "src/main.ts",
+    "scripts/discover.ts"
+  ],
+  "acceptance_criteria": [
+    "index.html is the Vite entry point (referenced in vite.config.ts)",
+    "Contains AI routing comments for agent discovery",
+    "Includes meta tags for AI agents (description, theme-color, etc.)",
+    "Has #grid container for presentation cards",
+    "Loads src/main.ts as module script",
+    "Links to src/style.css for styling",
+    "References public/api/manifest.json for dynamic data",
+    "No hardcoded presentation data in HTML"
+  ],
+  "deliverables": [
+    "index.html (updated)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

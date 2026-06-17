@@ -1,0 +1,33 @@
+{
+  "id": "vite-dashboard-08",
+  "seq": "08",
+  "title": "Create src/shared/plotly-live.ts",
+  "status": "pending",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md"
+  ],
+  "reference_files": [
+    "package.json",
+    "tsconfig.json",
+    "html/year10/science/newtons laws.html"
+  ],
+  "acceptance_criteria": [
+    "Exports PlotlyLive class or functions for interactive Plotly charts",
+    "Wraps plotly.js-dist-min for live updates",
+    "Provides createChart(config) and updateChart(data) methods",
+    "Supports real-time data streaming",
+    "Handles resize and theme changes",
+    "TypeScript types for all exports",
+    "Follows project code style"
+  ],
+  "deliverables": [
+    "src/shared/plotly-live.ts (new file)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

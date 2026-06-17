@@ -1,0 +1,38 @@
+{
+  "id": "vite-dashboard-01",
+  "seq": "01",
+  "title": "Create scripts/discover.ts - auto-discovery script",
+  "status": "pending",
+  "depends_on": [],
+  "parallel": false,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md"
+  ],
+  "reference_files": [
+    "package.json",
+    "tsconfig.json",
+    "html/year10/pdhpe/vaping-presentation.html",
+    "html/year10/science/newtons laws.html"
+  ],
+  "acceptance_criteria": [
+    "Script scans html/ directory recursively for .html files",
+    "Extracts @presentation metadata from HTML comment on line 2",
+    "Validates metadata against required schema (id, title, subject, year, topic, description, tags, author, version, created, updated, slides, duration, difficulty, libraries, thumbnail)",
+    "Writes public/api/manifest.json with array of presentation objects",
+    "Writes public/llms.txt with presentation summaries for LLM consumption",
+    "Writes public/.well-known/ai-plugin.json with AI plugin manifest",
+    "Handles missing/invalid metadata gracefully with warnings",
+    "Runs via 'npm run discover' without errors"
+  ],
+  "deliverables": [
+    "scripts/discover.ts",
+    "public/api/manifest.json (generated)",
+    "public/llms.txt (generated)",
+    "public/.well-known/ai-plugin.json (generated)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

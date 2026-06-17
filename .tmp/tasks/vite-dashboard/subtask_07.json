@@ -1,0 +1,32 @@
+{
+  "id": "vite-dashboard-07",
+  "seq": "07",
+  "title": "Create src/shared/pyodide-runner.ts",
+  "status": "pending",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md"
+  ],
+  "reference_files": [
+    "package.json",
+    "tsconfig.json"
+  ],
+  "acceptance_criteria": [
+    "Exports PyodideRunner class or functions for running Python in browser",
+    "Initializes Pyodide with required packages",
+    "Provides runPython(code: string) -> Promise<any> method",
+    "Handles stdout/stderr capture",
+    "Supports matplotlib, numpy, pandas if needed",
+    "TypeScript types for all exports",
+    "Follows project code style"
+  ],
+  "deliverables": [
+    "src/shared/pyodide-runner.ts (new file)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

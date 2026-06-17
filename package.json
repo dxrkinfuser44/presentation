@@ -1,0 +1,30 @@
+{
+  "name": "presentation",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "discover": "tsx scripts/discover.ts",
+    "dev": "npm run discover && vite",
+    "build": "npm run discover && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dxrkinfuser44/presentation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/plotly.js": "^3.0.10",
+    "@vitejs/plugin-react": "^6.0.2",
+    "glob": "^13.0.6",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16"
+  },
+  "dependencies": {
+    "plotly.js-dist-min": "^3.6.0"
+  }
+}

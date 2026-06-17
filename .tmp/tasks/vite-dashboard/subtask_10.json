@@ -1,0 +1,33 @@
+{
+  "id": "vite-dashboard-10",
+  "seq": "10",
+  "title": "Update .github/workflows/static.yml - run discover and build",
+  "status": "pending",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/security-patterns.md"
+  ],
+  "reference_files": [
+    ".github/workflows/static.yml",
+    "package.json",
+    "vite.config.ts"
+  ],
+  "acceptance_criteria": [
+    "Workflow runs on push to main and workflow_dispatch",
+    "Installs dependencies with npm ci",
+    "Runs 'npm run discover' to generate API files",
+    "Runs 'npm run build' to build Vite project",
+    "Uploads dist/ directory as Pages artifact (not entire repo)",
+    "Deploys to GitHub Pages",
+    "Proper permissions for pages deployment"
+  ],
+  "deliverables": [
+    ".github/workflows/static.yml (updated)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

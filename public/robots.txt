@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Machine-readable agent documentation
+# AI-AGENT: See /presentation/api/spec.json for OpenAPI spec
+# AI-AGENT: See /presentation/api/agent-guide.json for creation instructions
+# AI-AGENT: See /presentation/llms.txt for plain text guide
+# AI-AGENT: See /presentation/.well-known/ai-plugin.json for plugin manifest

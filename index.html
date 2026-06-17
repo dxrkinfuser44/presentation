@@ -1,0 +1,37 @@
+<!doctype html>
+<!--
+  AI-AGENT ROUTING
+  ════════════════
+  This site has a machine-readable API and agent guide.
+  If you are an AI agent looking to read or create presentations, start here:
+
+  • OpenAPI spec:   /presentation/api/spec.jgoson
+  • Agent guide:    /presentation/api/agent-guide.json
+  • All data:       /presentation/api/manifest.json
+  • LLM plain text: /presentation/llms.txt
+  • Plugin manifest: /presentation/.well-known/ai-plugin.json
+
+  Human visitors see none of this. The above endpoints are static JSON files.
+  To create a presentation, follow the GitHub Contents API instructions in agent-guide.json.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presentations</title>
+
+    <!-- Agent routing meta tags (machine-readable, not shown in browser) -->
+    <meta name="ai-docs"         content="/presentation/api/spec.json" />
+    <meta name="ai-agent-guide"  content="/presentation/api/agent-guide.json" />
+    <meta name="ai-data"         content="/presentation/api/manifest.json" />
+    <link rel="alternate" type="application/json"
+          href="/presentation/api/manifest.json"
+          title="Presentations API — machine-readable index" />
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "id": "vite-dashboard-11",
+  "seq": "11",
+  "title": "Update .gitignore - exclude generated files",
+  "status": "pending",
+  "depends_on": ["01"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md"
+  ],
+  "reference_files": [
+    ".gitignore",
+    "scripts/discover.ts"
+  ],
+  "acceptance_criteria": [
+    "Excludes public/api/ (generated manifest.json)",
+    "Excludes public/.well-known/ (generated ai-plugin.json)",
+    "Excludes public/llms.txt (generated)",
+    "Excludes dist/ (Vite build output)",
+    "Excludes node_modules/ (already there)",
+    "Root .gitignore created/updated (not .opencode/.gitignore)"
+  ],
+  "deliverables": [
+    ".gitignore (updated/created at repo root)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

@@ -1,0 +1,5 @@
+/dist
+/node_modules
+/public/api/
+/public/llms.txt
+/public/.well-known/

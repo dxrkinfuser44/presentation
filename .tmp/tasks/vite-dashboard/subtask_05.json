@@ -1,0 +1,34 @@
+{
+  "id": "vite-dashboard-05",
+  "seq": "05",
+  "title": "Update src/main.ts - fetch manifest and render cards",
+  "status": "pending",
+  "depends_on": ["01", "04"],
+  "parallel": false,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md"
+  ],
+  "reference_files": [
+    "src/main.ts",
+    "index.html",
+    "scripts/discover.ts"
+  ],
+  "acceptance_criteria": [
+    "Fetches /presentation/api/manifest.json at runtime",
+    "Renders presentation cards dynamically from manifest data",
+    "Handles loading state with spinner",
+    "Handles error state gracefully",
+    "Uses CSS custom properties for card theming (--bg, --accent)",
+    "Cards link to presentation HTML files",
+    "Displays subject badge, title, description, and tags",
+    "No hardcoded presentation data"
+  ],
+  "deliverables": [
+    "src/main.ts (updated)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

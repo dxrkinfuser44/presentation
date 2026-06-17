@@ -1,0 +1,35 @@
+{
+  "id": "vite-dashboard-06",
+  "seq": "06",
+  "title": "Create src/style.css - dark theme, card grid, CSS custom properties",
+  "status": "pending",
+  "depends_on": ["04"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [
+    ".opencode/context/core/standards/code-quality.md"
+  ],
+  "reference_files": [
+    "index.html",
+    "src/main.ts"
+  ],
+  "acceptance_criteria": [
+    "Dark theme with CSS custom properties (--bg, --fg, --muted, --accent, --card, --border)",
+    "Responsive card grid using CSS Grid (auto-fit, minmax)",
+    "Card styling with hover effects and accent bar",
+    "Subject badge styling",
+    "Loading spinner animation",
+    "Error state styling",
+    "Empty state styling",
+    "Typography using Google Fonts (Fraunces, Outfit)",
+    "Smooth transitions and animations",
+    "Mobile responsive breakpoints"
+  ],
+  "deliverables": [
+    "src/style.css (new file)"
+  ],
+  "agent_id": null,
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}
