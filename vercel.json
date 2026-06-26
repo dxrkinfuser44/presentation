@@ -5,34 +5,10 @@
   "installCommand": "npm ci",
   "framework": "vite",
   "rewrites": [
-    {
-      "source": "/html/(.*)",
-      "destination": "/html/$1"
-    },
-    {
-      "source": "/api/manifest.json",
-      "destination": "/api/manifest.json"
-    },
-    {
-      "source": "/api/spec.json",
-      "destination": "/api/spec.json"
-    },
-    {
-      "source": "/api/agent-guide.json",
-      "destination": "/api/agent-guide.json"
-    },
-    {
-      "source": "/api/presentation/(.*)",
-      "destination": "/api/presentation/$1"
-    },
-    {
-      "source": "/llms.txt",
-      "destination": "/llms.txt"
-    },
-    {
-      "source": "/.well-known/(.*)",
-      "destination": "/.well-known/$1"
-    },
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/html/(.*)", "destination": "/html/$1" },
+    { "source": "/llms.txt", "destination": "/llms.txt" },
+    { "source": "/.well-known/(.*)", "destination": "/.well-known/$1" },
     {
       "source": "/((?!api|_next/static|_next/image|favicon.ico|\\.well-known|llms.txt|lib|src|node_modules|\\.(js|css|png|jpg|jpeg|gif|svg|ico|json|txt|html|map)$).*)",
       "destination": "/index.html"
