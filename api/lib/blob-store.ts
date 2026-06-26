@@ -148,6 +148,7 @@ export async function getChallenge(challengeId: string): Promise<Challenge | nul
   }
 }
 
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 export async function deleteChallenge(_challengeId: string): Promise<void> {
   try {
     await list({ prefix: `challenges/`, limit: 1 });

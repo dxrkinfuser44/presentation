@@ -32,6 +32,10 @@
     {
       "source": "/.well-known/(.*)",
       "destination": "/.well-known/$1"
+    },
+    {
+      "source": "/((?!api|_next/static|_next/image|favicon.ico|\\.well-known|llms.txt|lib|src|node_modules|\\.(js|css|png|jpg|jpeg|gif|svg|ico|json|txt|html|map)$).*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
