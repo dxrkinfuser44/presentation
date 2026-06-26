@@ -1,0 +1,47 @@
+{
+  "swarmId": "swarm-2026-06-26",
+  "status": "active",
+  "createdAt": "2026-06-26T11:44:02Z",
+  "lastUpdated": "2026-06-26T11:44:02Z",
+  "teams": {
+    "auth": {
+      "status": "waiting",
+      "progress": 0,
+      "agents": ["auth-planner", "auth-coder", "auth-security-reviewer", "auth-test-engineer"],
+      "currentTask": null
+    },
+    "frontend": {
+      "status": "waiting",
+      "progress": 0,
+      "agents": ["frontend-planner", "frontend-coder", "frontend-ui-specialist", "frontend-tester"],
+      "currentTask": null
+    },
+    "backend": {
+      "status": "waiting",
+      "progress": 0,
+      "agents": ["backend-planner", "backend-coder", "backend-devops", "backend-tester"],
+      "currentTask": null
+    }
+  },
+  "tasks": [
+    {
+      "id": "swarm-init-001",
+      "status": "completed",
+      "agent": "swarm-coordinator",
+      "team": "infrastructure"
+    }
+  ],
+  "messages": [
+    {
+      "type": "swarm.initialized",
+      "from": "swarm-coordinator",
+      "to": "broadcast",
+      "timestamp": "2026-06-26T11:44:02Z"
+    }
+  ],
+  "config": {
+    "maxRetries": 3,
+    "timeoutMinutes": 5,
+    "heartbeatIntervalSeconds": 30
+  }
+}

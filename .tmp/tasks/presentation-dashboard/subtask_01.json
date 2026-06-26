@@ -1,0 +1,22 @@
+{
+  "id": "presentation-dashboard-01",
+  "seq": "01",
+  "title": "Server bootstrap — Express app init, static file serving, port binding",
+  "status": "completed",
+  "depends_on": [],
+  "parallel": false,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["package.json", "vite.config.ts"],
+  "acceptance_criteria": [
+    "server/index.js exists and exports a configured Express app",
+    "Static files served from dist/ directory",
+    "Server binds to 0.0.0.0:<PORT> (not 127.0.0.1)",
+    "PORT configurable via process.env.PORT, defaults to 3000",
+    "npm start runs the server without errors"
+  ],
+  "deliverables": ["server/index.js"],
+  "started_at": "2026-01-28T00:00:00Z",
+  "completed_at": "2026-01-28T00:00:00Z",
+  "completion_summary": "Scaffolded server/index.js with Express ESM app, static file serving from dist/, 0.0.0.0 binding, PORT env var, graceful shutdown"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "passkey-auth-selfhosted-02",
+  "seq": "02",
+  "title": "Create server/routes/auth/challenge.ts - Express route for challenge generation",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/auth/challenge.ts"],
+  "acceptance_criteria": [
+    "GET /auth/challenge returns challengeId and challenge",
+    "Challenge stored with timestamp",
+    "5-minute expiry check",
+    "Single-use challenge (deleted after verification)"
+  ],
+  "deliverables": ["server/routes/auth/challenge.ts"],
+  "started_at": "2026-06-26T12:35:00Z",
+  "completed_at": "2026-06-26T12:37:00Z",
+  "completion_summary": "Created challenge route with 5-minute expiry and single-use verification"
+}

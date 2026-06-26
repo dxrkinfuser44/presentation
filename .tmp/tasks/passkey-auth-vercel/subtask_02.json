@@ -1,0 +1,22 @@
+{
+  "id": "passkey-auth-vercel-02",
+  "seq": "02",
+  "title": "Update api/auth/register.ts - Handle WebAuthn registration, verify attestation, store credential",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/auth/register.ts", "api/lib/blob-store.ts"],
+  "acceptance_criteria": [
+    "Verify attestation response from WebAuthn registration",
+    "Parse clientDataJSON and verify RP ID",
+    "Verify credential signature",
+    "Store credential in admin_key.json",
+    "Generate 10 recovery codes and store in admin_recovery.json"
+  ],
+  "deliverables": ["api/auth/register.ts"],
+  "started_at": "2026-06-26T02:30:00Z",
+  "completed_at": "2026-06-26T02:35:00Z",
+  "completion_summary": "Implemented WebAuthn registration with attestation verification, RP ID check, credential storage, and recovery code generation"
+}

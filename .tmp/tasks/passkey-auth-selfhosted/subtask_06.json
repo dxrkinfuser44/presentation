@@ -1,0 +1,21 @@
+{
+  "id": "passkey-auth-selfhosted-06",
+  "seq": "06",
+  "title": "Create server/routes/auth/recover.ts - Recovery code login",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/auth/recover.ts"],
+  "acceptance_criteria": [
+    "POST /auth/recover accepts recovery code",
+    "Verifies code against SHA-256 hash",
+    "Marks code as used (one-time use)",
+    "Creates 24-hour session on success"
+  ],
+  "deliverables": ["server/routes/auth/recover.ts"],
+  "started_at": "2026-06-26T12:44:00Z",
+  "completed_at": "2026-06-26T12:45:00Z",
+  "completion_summary": "Created recover route with one-time recovery code verification and session creation"
+}

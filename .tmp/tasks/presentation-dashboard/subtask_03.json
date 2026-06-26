@@ -1,0 +1,23 @@
+{
+  "id": "presentation-dashboard-03",
+  "seq": "03",
+  "title": "Server watcher — chokidar file watching with in-memory cache",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-01-28T00:00:00Z",
+  "completed_at": "2026-01-28T00:00:00Z",
+  "completion_summary": "Created server/cache.js and server/watcher.js with chokidar-based event-driven file watching, no polling. Cache warmed on startup.",
+  "depends_on": ["01"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["scripts/discover.ts"],
+  "acceptance_criteria": [
+    "chokidar watches html/year10 for add, change, unlink events",
+    "In-memory cache invalidated/updated on file events",
+    "No polling — event-driven only",
+    "Cache warmed on server start",
+    "File changes reflected in /api/presentations without server restart"
+  ],
+  "deliverables": ["server/cache.js", "server/watcher.js"]
+}

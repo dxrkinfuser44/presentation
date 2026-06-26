@@ -1,0 +1,23 @@
+{
+  "id": "presentation-dashboard-13",
+  "seq": "13",
+  "title": "Frontend API contract check — update fetch URL to /api/presentations",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-01-28T00:00:00Z",
+  "completed_at": "2026-01-28T00:01:00Z",
+  "completion_summary": "Updated fetch URL from /presentation/api/manifest.json to /api/presentations in src/main.ts. No shape mismatch. No cache-busting params found.",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["src/main.ts", "scripts/discover.ts"],
+  "acceptance_criteria": [
+    "Fetch URL changed from /presentation/api/manifest.json to /api/presentations",
+    "Response shape matches current manifest (presentations array with same fields)",
+    "No cache-busting query params that are no longer needed",
+    "href values in presentation entries no longer include /presentation/ prefix",
+    "Frontend renders correctly with new API response"
+  ],
+  "deliverables": ["src/main.ts"]
+}

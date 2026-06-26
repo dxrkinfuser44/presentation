@@ -1,0 +1,21 @@
+{
+  "id": "passkey-auth-vercel-05",
+  "seq": "05",
+  "title": "Create api/auth/recover.ts - Recovery code login endpoint",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/lib/blob-store.ts"],
+  "acceptance_criteria": [
+    "Accept recovery code from request body",
+    "Verify recovery code against stored hash",
+    "Mark recovery code as used (one-time use)",
+    "Create session with 24-hour expiry"
+  ],
+  "deliverables": ["api/auth/recover.ts"],
+  "started_at": "2026-06-26T02:41:00Z",
+  "completed_at": "2026-06-26T02:42:00Z",
+  "completion_summary": "Created recover.ts endpoint for recovery code login with one-time use verification and session creation"
+}

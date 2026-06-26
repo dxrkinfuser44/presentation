@@ -1,0 +1,20 @@
+{
+  "id": "passkey-auth-vercel-04",
+  "seq": "04",
+  "title": "Update api/auth/verify.ts - Validate session token",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/auth/verify.ts", "api/lib/blob-store.ts"],
+  "acceptance_criteria": [
+    "Validate session token from Authorization header",
+    "Check session expiry",
+    "Return admin status if valid"
+  ],
+  "deliverables": ["api/auth/verify.ts"],
+  "started_at": "2026-06-26T02:40:00Z",
+  "completed_at": "2026-06-26T02:41:00Z",
+  "completion_summary": "Updated verify.ts to validate session token and check expiry"
+}

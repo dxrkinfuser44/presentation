@@ -1,0 +1,20 @@
+{
+  "id": "passkey-auth-selfhosted-05",
+  "seq": "05",
+  "title": "Create server/routes/auth/verify.ts - Express route for session validation",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/auth/verify.ts"],
+  "acceptance_criteria": [
+    "GET /auth/verify validates session token from Authorization header",
+    "Checks session expiry (24 hours)",
+    "Returns { ok: true, admin: true } for valid sessions"
+  ],
+  "deliverables": ["server/routes/auth/verify.ts"],
+  "started_at": "2026-06-26T12:43:00Z",
+  "completed_at": "2026-06-26T12:44:00Z",
+  "completion_summary": "Created verify route for session validation with 24-hour expiry check"
+}

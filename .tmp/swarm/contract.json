@@ -1,0 +1,67 @@
+{
+  "manifest": {
+    "version": "2.0.0",
+    "description": "Hybrid Turso + GitHub Presentation System",
+    "lastUpdated": "2026-06-23T00:00:00Z"
+  },
+
+  "apiSpecs": {
+    "auth": {
+      "register": { "method": "POST", "path": "/api/auth/register" },
+      "login": { "method": "POST", "path": "/api/auth/login" },
+      "verify": { "method": "GET", "path": "/api/auth/verify" }
+    },
+    "presentations": {
+      "list": { "method": "GET", "path": "/api/presentations" },
+      "view": { "method": "GET", "path": "/api/presentation/[id]" }
+    },
+    "admin": {
+      "upload": { "method": "POST", "path": "/api/admin/upload" },
+      "delete": { "method": "DELETE", "path": "/api/admin/delete" }
+    },
+    "sync": {
+      "resync": { "method": "POST", "path": "/api/sync/resync" }
+    }
+  },
+
+  "dataSchema": {
+    "turso": {
+      "tables": {
+        "presentations": {
+          "columns": {
+            "id": "TEXT PRIMARY KEY",
+            "title": "TEXT",
+            "subject": "TEXT",
+            "year": "INTEGER",
+            "description": "TEXT",
+            "accent": "TEXT",
+            "bg": "TEXT",
+            "tags": "TEXT",
+            "content": "TEXT",
+            "filePath": "TEXT",
+            "addedAt": "TEXT"
+          }
+        },
+        "admin_keys": {
+          "columns": {
+            "credentialId": "TEXT PRIMARY KEY",
+            "publicKey": "TEXT",
+            "alg": "INTEGER"
+          }
+        }
+      }
+    },
+    "github": {
+      "owner": "dxrkinfuser44",
+      "repo": "presentation",
+      "branch": "main"
+    }
+  },
+
+  "environmentVariables": {
+    "TURSO_URL": "libsql://...",
+    "TURSO_TOKEN": "...",
+    "GITHUB_TOKEN": "...",
+    "ADMIN_CHALLENGE_SECRET": "..."
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "presentation-dashboard-09",
+  "seq": "09",
+  "title": "Dependency audit — identify unused and missing deps, propose versions",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-06-22T00:00:00Z",
+  "completed_at": "2026-06-22T00:01:00Z",
+  "completion_summary": "Dependency audit complete: no GH-Pages-specific unused deps; @vitejs/plugin-react flagged as unused; express ^5.2.1, chokidar ^4.0.3, @types/express ^5.0.6 proposed",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["package.json", "package-lock.json"],
+  "acceptance_criteria": [
+    "List of unused GH-Pages-deploy-specific deps identified",
+    "Missing deps identified: express, chokidar",
+    "Exact version proposals for missing deps",
+    "No install commands run — diff/plan only",
+    "Report produced as comment or markdown"
+  ],
+  "deliverables": ["DEPS_AUDIT.md"]
+}

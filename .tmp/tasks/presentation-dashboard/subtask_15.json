@@ -1,0 +1,23 @@
+{
+  "id": "presentation-dashboard-15",
+  "seq": "15",
+  "title": "Smoke test script — curl-based health check for / and /api/presentations",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-01-28T00:00:00Z",
+  "completed_at": "2026-01-28T00:00:00Z",
+  "completion_summary": "Created scripts/smoke-test.sh: bash smoke test that curls / and /api/presentations, validates 200 status, HTML content, and JSON shape with presentations array. Exits non-zero on failure.",
+  "depends_on": ["01", "02", "06", "07"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["server/index.js"],
+  "acceptance_criteria": [
+    "Script at scripts/smoke-test.sh or scripts/smoke-test.js",
+    "Curls / and checks for HTTP 200",
+    "Curls /api/presentations and validates JSON shape",
+    "Exits non-zero on any failure",
+    "Runnable after npm start"
+  ],
+  "deliverables": ["scripts/smoke-test.sh"]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "passkey-auth-selfhosted-04",
+  "seq": "04",
+  "title": "Create server/routes/auth/login.ts - Express route for WebAuthn authentication",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/auth/login.ts"],
+  "acceptance_criteria": [
+    "POST /auth/login accepts WebAuthn assertion data",
+    "Verifies challenge (single-use)",
+    "Verifies RP ID and origin",
+    "Verifies signature using stored public key",
+    "Updates sign count",
+    "Creates 24-hour session"
+  ],
+  "deliverables": ["server/routes/auth/login.ts"],
+  "started_at": "2026-06-26T12:40:00Z",
+  "completed_at": "2026-06-26T12:43:00Z",
+  "completion_summary": "Created login route with WebAuthn assertion verification and session creation"
+}

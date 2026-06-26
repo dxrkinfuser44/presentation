@@ -1,0 +1,22 @@
+{
+  "id": "presentation-dashboard-04",
+  "seq": "04",
+  "title": "Server error handling — 404, malformed metadata, graceful shutdown",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-01-28T00:00:00Z",
+  "completed_at": "2026-01-28T00:00:00Z",
+  "completion_summary": "Extracted 404, error, and graceful-shutdown middleware from server/index.js into server/middleware/error-handler.js. Updated index.js to import and use extracted middleware.",
+  "depends_on": ["01"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["server/index.js"],
+  "acceptance_criteria": [
+    "404 handler returns appropriate response for unknown routes",
+    "Malformed metadata logged with file path, scan continues",
+    "SIGTERM handler performs graceful shutdown",
+    "Server never crashes on malformed HTML metadata"
+  ],
+  "deliverables": ["server/middleware/error-handler.js"]
+}

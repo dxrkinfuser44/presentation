@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Swarm Message Schema",
+  "description": "Schema for inter-agent messages in the swarm",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Message type",
+      "examples": [
+        "task.request",
+        "task.completed",
+        "task.failed",
+        "message.response",
+        "state.update",
+        "heartbeat"
+      ]
+    },
+    "from": {
+      "type": "string",
+      "description": "Sender agent ID"
+    },
+    "to": {
+      "type": "string",
+      "description": "Recipient (can be team name, agent ID, or 'broadcast')"
+    },
+    "taskId": {
+      "type": "string",
+      "description": "Task identifier if message relates to a task"
+    },
+    "teamId": {
+      "type": "string",
+      "description": "Team identifier if message is team-scoped"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Message payload with action-specific data"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "For tracking request-response pairs"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "normal", "high", "urgent"],
+      "default": "normal"
+    },
+    "ttl": {
+      "type": "number",
+      "description": "Time to live in seconds"
+    }
+  },
+  "required": ["type", "from", "to", "timestamp"]
+}

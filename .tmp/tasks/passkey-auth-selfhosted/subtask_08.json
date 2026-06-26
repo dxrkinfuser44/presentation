@@ -1,0 +1,20 @@
+{
+  "id": "passkey-auth-selfhosted-08",
+  "seq": "08",
+  "title": "Create server/middleware/auth.ts - Token validation middleware",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["server/middleware/"],
+  "acceptance_criteria": [
+    "Validates session token from Authorization header or cookie",
+    "Returns 401 for invalid/missing tokens",
+    "Attaches admin identity to request object"
+  ],
+  "deliverables": ["server/middleware/auth.ts"],
+  "started_at": "2026-06-26T12:45:00Z",
+  "completed_at": "2026-06-26T12:46:00Z",
+  "completion_summary": "Created auth middleware with token validation and optional auth support"
+}

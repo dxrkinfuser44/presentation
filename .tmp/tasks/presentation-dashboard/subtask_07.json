@@ -1,0 +1,23 @@
+{
+  "id": "presentation-dashboard-07",
+  "seq": "07",
+  "title": "Package.json scripts — add start/dev, remove GH Pages deploy scripts",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["package.json"],
+  "acceptance_criteria": [
+    "\"start\" script runs the Express server (node server/index.js)",
+    "\"dev\" script runs server in development mode",
+    "\"build\" script runs Vite build (without discover)",
+    "GH Pages-specific scripts removed or deprecated",
+    "npm start works correctly"
+  ],
+  "deliverables": ["package.json"],
+  "started_at": null,
+  "completed_at": "2026-01-28T00:00:00Z",
+  "completion_summary": "Added start script, simplified build to vite build, removed preview"
+}

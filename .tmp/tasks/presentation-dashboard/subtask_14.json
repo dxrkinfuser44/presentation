@@ -1,0 +1,22 @@
+{
+  "id": "presentation-dashboard-14",
+  "seq": "14",
+  "title": "CORS and same-origin check — confirm same-origin, remove CORS if present",
+  "status": "completed",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["server/index.js", "src/main.ts"],
+  "acceptance_criteria": [
+    "Frontend and API are same-origin under Express (both served from /)",
+    "No CORS headers configured (not needed for same-origin)",
+    "No CORS middleware installed or referenced",
+    "Fetch from frontend to /api/presentations works without CORS issues"
+  ],
+  "deliverables": [],
+  "agent_id": "coder-agent",
+  "started_at": "2026-06-22T00:00:00Z",
+  "completed_at": "2026-06-22T00:00:00Z",
+  "completion_summary": "No CORS handling found in codebase. Frontend and API are same-origin (relative paths). No server/cors middleware exists."
+}

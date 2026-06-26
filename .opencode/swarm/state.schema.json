@@ -1,0 +1,84 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Swarm State Schema",
+  "description": "Schema for multi-agent swarm state management",
+  "properties": {
+    "swarmId": {
+      "type": "string",
+      "description": "Unique identifier for the swarm instance"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "paused", "completed", "failed"],
+      "description": "Overall swarm status"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "teams": {
+      "type": "object",
+      "description": "Registered teams and their status",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "planning",
+              "executing",
+              "reviewing",
+              "testing",
+              "completed",
+              "waiting",
+              "failed"
+            ]
+          },
+          "progress": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "agents": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "currentTask": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "status": { "type": "string" },
+          "agent": { "type": "string" },
+          "team": { "type": "string" }
+        }
+      }
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "maxRetries": { "type": "number" },
+        "timeoutMinutes": { "type": "number" },
+        "heartbeatIntervalSeconds": { "type": "number" }
+      }
+    }
+  }
+}

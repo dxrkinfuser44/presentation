@@ -1,0 +1,23 @@
+{
+  "id": "presentation-dashboard-16",
+  "seq": "16",
+  "title": "README update — new local-WSL + Tailscale deployment model",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["AGENTS.md", ".github/workflows/static.yml"],
+  "acceptance_criteria": [
+    "AGENTS.md updated with new deployment model",
+    "GH Pages instructions removed",
+    "\"Local Dev\" section added with npm run dev / npm start",
+    "\"Production (WSL)\" section added with systemd + Tailscale",
+    "No references to GitHub Pages deployment remain"
+  ],
+  "deliverables": ["AGENTS.md"],
+  "started_at": "2026-06-22T00:00:00Z",
+  "completed_at": "2026-06-22T00:00:00Z",
+  "completion_summary": "Updated AGENTS.md: new Vite+WSL+Tailscale deployment model, removed GH Pages, added Local Dev/Production/API sections"
+}

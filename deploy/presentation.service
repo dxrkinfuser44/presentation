@@ -1,0 +1,14 @@
+[Unit]
+Description=Presentation Dashboard Server
+After=network.target
+
+[Service]
+Type=simple
+User=
+WorkingDirectory=/path/to/presentation
+ExecStart=/usr/bin/node server/index.js
+Restart=on-failure
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+[
+  {
+    "type": "swarm.initialized",
+    "from": "swarm-coordinator",
+    "to": "broadcast",
+    "payload": {
+      "message": "Swarm infrastructure initialized",
+      "teams": ["auth", "frontend", "backend"],
+      "agentsRegistered": 13
+    },
+    "timestamp": "2026-06-26T11:44:02Z"
+  }
+]
