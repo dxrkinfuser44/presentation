@@ -17,6 +17,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "express": "^5.2.1",
     "plotly.js-dist-min": "^3.6.0"
   },
   "devDependencies": {
