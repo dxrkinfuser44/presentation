@@ -13,14 +13,17 @@
   "scripts": {
     "discover": "tsx scripts/discover.ts",
     "dev": "npm run discover && vite",
-    "build": "npm run discover && vite build && xcopy /E /I html dist\\html",
+    "build": "npm run discover && vite build && cp -r html dist/html",
     "preview": "vite preview"
   },
   "dependencies": {
+    "compression": "^1.8.1",
     "express": "^5.2.1",
+    "helmet": "^8.2.0",
     "plotly.js-dist-min": "^3.6.0"
   },
   "devDependencies": {
+    "@types/node": "^26.0.1",
     "@types/plotly.js": "^3.0.10",
     "@vitejs/plugin-react": "^6.0.2",
     "glob": "^13.0.6",

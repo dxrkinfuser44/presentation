@@ -67,7 +67,7 @@ export async function setAdminKey(key: AdminKey): Promise<void> {
  * Generate a random token
  */
 export function generateToken(length: number = 32): string {
-  return _crypto.randomBytes(length).toString("hex");
+  return __crypto.randomBytes(length).toString("hex");
 }
 
 export interface Session {
@@ -195,7 +195,7 @@ export async function setRecoveryCodes(codes: RecoveryCode[]): Promise<void> {
  */
 export async function verifyRecoveryCode(code: string): Promise<boolean> {
   const codes = await getRecoveryCodes();
-  const codeHash = crypto.createHash("sha256").update(code).digest("hex");
+  const codeHash = _crypto.createHash("sha256").update(code).digest("hex");
 
   const codeEntry = codes.find((c) => c.codeHash === codeHash);
 
@@ -227,7 +227,7 @@ export async function generateRecoveryCodes(): Promise<string[]> {
       .slice(0, 16);
     codes.push(code);
     codeEntries.push({
-      codeHash: crypto.createHash("sha256").update(code).digest("hex"),
+      codeHash: _crypto.createHash("sha256").update(code).digest("hex"),
       used: false,
       usedAt: null,
     });
