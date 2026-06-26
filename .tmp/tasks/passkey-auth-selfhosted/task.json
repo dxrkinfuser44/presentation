@@ -1,0 +1,25 @@
+{
+  "id": "passkey-auth-selfhosted",
+  "name": "Passkey Authentication for Self-Hosted",
+  "status": "completed",
+  "objective": "Implement production-ready passkey authentication for self-hosted branch (Phase 1)",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": [
+    "api/auth/challenge.ts",
+    "api/auth/register.ts",
+    "api/auth/login.ts",
+    "api/auth/verify.ts",
+    "api/auth/recover.ts",
+    "api/lib/blob-store.ts"
+  ],
+  "exit_criteria": [
+    "Admin can register a passkey via browser",
+    "Admin can login with registered passkey",
+    "Recovery codes work for admin access",
+    "Sessions expire after 24 hours"
+  ],
+  "subtask_count": 8,
+  "completed_count": 8,
+  "created_at": "2026-01-11T10:00:00Z",
+  "completed_at": "2026-06-26T12:47:00Z"
+}

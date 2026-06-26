@@ -1,0 +1,23 @@
+{
+  "id": "presentation-dashboard-08",
+  "seq": "08",
+  "title": "Static JSON generator retirement — deprecate scripts/discover.ts",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-06-22T00:00:00Z",
+  "completed_at": "2026-06-22T00:01:00Z",
+  "completion_summary": "Added @deprecated header to scripts/discover.ts; confirmed no runtime code imports discover.ts output — src/main.ts fetches manifest.json via HTTP, not a direct dependency",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["scripts/discover.ts", "package.json"],
+  "acceptance_criteria": [
+    "DEPRECATED comment header added to scripts/discover.ts",
+    "Script kept for schema reference (not deleted)",
+    "No runtime dependency on its output remains",
+    "\"discover\" script in package.json marked as deprecated or removed",
+    "Confirm nothing else in repo imports or requires discover.ts output"
+  ],
+  "deliverables": ["scripts/discover.ts"]
+}

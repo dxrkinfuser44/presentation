@@ -1,0 +1,23 @@
+{
+  "id": "presentation-dashboard-17",
+  "seq": "17",
+  "title": "Gitignore audit — confirm dist/, logs, node_modules ignored",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": [".gitignore"],
+  "acceptance_criteria": [
+    "dist/ is in .gitignore",
+    "node_modules/ is in .gitignore",
+    "Log files (*.log) are ignored",
+    ".env or environment files are ignored",
+    "No server artifacts committed unintentionally"
+  ],
+  "deliverables": [".gitignore"],
+  "started_at": "2026-06-22T00:00:00Z",
+  "completed_at": "2026-06-22T00:00:00Z",
+  "completion_summary": "Added *.log and .env entries to .gitignore for server workflow"
+}

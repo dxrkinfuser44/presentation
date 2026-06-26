@@ -1,0 +1,22 @@
+{
+  "id": "presentation-dashboard-06",
+  "seq": "06",
+  "title": "Vite config audit — remove GH Pages base path, confirm dist/ output",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-01-28T00:00:00Z",
+  "completed_at": "2026-01-28T00:00:00Z",
+  "completion_summary": "Removed GH Pages base path from vite.config.ts, changed base to '/' for local server",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["vite.config.ts"],
+  "acceptance_criteria": [
+    "base: '/presentation/' removed from vite.config.ts",
+    "Build output goes to dist/ as expected by server-bootstrap",
+    "npm run build completes without errors",
+    "No broken asset references after base path removal"
+  ],
+  "deliverables": ["vite.config.ts"]
+}

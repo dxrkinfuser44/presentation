@@ -1,0 +1,22 @@
+{
+  "id": "passkey-auth-selfhosted-03",
+  "seq": "03",
+  "title": "Create server/routes/auth/register.ts - Express route for WebAuthn registration",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/auth/register.ts"],
+  "acceptance_criteria": [
+    "POST /auth/register accepts WebAuthn registration data",
+    "Verifies challenge (single-use)",
+    "Verifies RP ID matches expected origin",
+    "Stores credential in admin_key.json",
+    "Generates 10 recovery codes with SHA-256 hashing"
+  ],
+  "deliverables": ["server/routes/auth/register.ts"],
+  "started_at": "2026-06-26T12:37:00Z",
+  "completed_at": "2026-06-26T12:40:00Z",
+  "completion_summary": "Created register route with WebAuthn verification and recovery code generation"
+}

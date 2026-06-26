@@ -1,0 +1,28 @@
+{
+  "id": "presentation-dashboard-02",
+  "seq": "02",
+  "title": "Server API — GET /api/presentations with live directory scan",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-06-22T00:00:00Z",
+  "completed_at": "2026-06-22T00:05:00Z",
+  "depends_on": ["01"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": [
+    "scripts/discover.ts",
+    "html/year10/science/newtons laws.html",
+    "html/year10/pdhpe/vaping-presentation.html"
+  ],
+  "acceptance_criteria": [
+    "GET /api/presentations returns JSON matching the current manifest shape exactly",
+    "Live directory scan of html/year10 at request time (not build-time)",
+    "Metadata extracted from <!--@presentation ... --> comment blocks",
+    "Malformed metadata skipped with console.warn, never crashes",
+    "Response includes $schema, generated, count, presentations array",
+    "Each presentation entry includes id, href, filePath, addedAt fields"
+  ],
+  "deliverables": ["server/routes/presentations.js"],
+  "completion_summary": "Created Express router with live html/year10 scan, @presentation metadata extraction, and manifest JSON response matching static schema."
+}

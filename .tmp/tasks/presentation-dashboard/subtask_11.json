@@ -1,0 +1,22 @@
+{
+  "id": "presentation-dashboard-11",
+  "seq": "11",
+  "title": "Tailscale serve config — Windows host proxy commands",
+  "status": "pending",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["server/index.js"],
+  "acceptance_criteria": [
+    "tailscale serve commands target Windows host (PowerShell/cmd)",
+    "Proxy configured to http://localhost:<port>",
+    "HTTPS on port 443 specified",
+    "Verification command included: tailscale serve status",
+    "No Tailscale reference inside WSL2"
+  ],
+  "deliverables": ["deploy/tailscale-serve.md"],
+  "started_at": null,
+  "completed_at": null,
+  "completion_summary": null
+}

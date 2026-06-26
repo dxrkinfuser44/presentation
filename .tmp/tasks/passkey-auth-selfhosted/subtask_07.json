@@ -1,0 +1,20 @@
+{
+  "id": "passkey-auth-selfhosted-07",
+  "seq": "07",
+  "title": "Update server/index.js - Mount auth routes",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["server/index.js"],
+  "acceptance_criteria": [
+    "Mounts auth routes at /auth prefix",
+    "Creates server/data directory if not exists",
+    "Initializes file store"
+  ],
+  "deliverables": ["server/index.js"],
+  "started_at": "2026-06-26T12:46:00Z",
+  "completed_at": "2026-06-26T12:47:00Z",
+  "completion_summary": "Updated server/index.js to mount auth routes and initialize data directory"
+}

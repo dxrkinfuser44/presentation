@@ -1,0 +1,133 @@
+{
+  "agents": {
+    "swarm-coordinator": {
+      "id": "swarm-coordinator",
+      "name": "SwarmCoordinator",
+      "status": "active",
+      "type": "subagent",
+      "path": ".opencode/agent/swarm-coordinator/SKILL.md",
+      "capabilities": ["orchestration", "coordination", "message-routing", "failure-recovery"],
+      "lastSeen": "2026-06-26T11:44:02Z"
+    },
+    "auth-planner": {
+      "id": "auth-planner",
+      "name": "AuthPlanner",
+      "status": "registered",
+      "type": "subagent",
+      "team": "auth",
+      "path": ".opencode/agent/teams/auth/auth-planner/SKILL.md",
+      "capabilities": ["planning", "auth", "security"],
+      "lastSeen": null
+    },
+    "auth-coder": {
+      "id": "auth-coder",
+      "name": "AuthCoder",
+      "status": "registered",
+      "type": "subagent",
+      "team": "auth",
+      "path": ".opencode/agent/teams/auth/auth-coder/SKILL.md",
+      "capabilities": ["coding", "auth", "implementation"],
+      "lastSeen": null
+    },
+    "auth-security-reviewer": {
+      "id": "auth-security-reviewer",
+      "name": "AuthSecurityReviewer",
+      "status": "registered",
+      "type": "subagent",
+      "team": "auth",
+      "path": ".opencode/agent/teams/auth/auth-security-reviewer/SKILL.md",
+      "capabilities": ["security-review", "auth", "vulnerability-assessment"],
+      "lastSeen": null
+    },
+    "auth-test-engineer": {
+      "id": "auth-test-engineer",
+      "name": "AuthTestEngineer",
+      "status": "registered",
+      "type": "subagent",
+      "team": "auth",
+      "path": ".opencode/agent/teams/auth/auth-test-engineer/SKILL.md",
+      "capabilities": ["testing", "auth", "test-automation"],
+      "lastSeen": null
+    },
+    "frontend-planner": {
+      "id": "frontend-planner",
+      "name": "FrontendPlanner",
+      "status": "registered",
+      "type": "subagent",
+      "team": "frontend",
+      "path": ".opencode/agent/teams/frontend/frontend-planner/SKILL.md",
+      "capabilities": ["planning", "frontend", "ui-ux"],
+      "lastSeen": null
+    },
+    "frontend-coder": {
+      "id": "frontend-coder",
+      "name": "FrontendCoder",
+      "status": "registered",
+      "type": "subagent",
+      "team": "frontend",
+      "path": ".opencode/agent/teams/frontend/frontend-coder/SKILL.md",
+      "capabilities": ["coding", "frontend", "implementation"],
+      "lastSeen": null
+    },
+    "frontend-ui-specialist": {
+      "id": "frontend-ui-specialist",
+      "name": "FrontendUISpecialist",
+      "status": "registered",
+      "type": "subagent",
+      "team": "frontend",
+      "path": ".opencode/agent/teams/frontend/frontend-ui-specialist/SKILL.md",
+      "capabilities": ["ui-design", "frontend", "animation"],
+      "lastSeen": null
+    },
+    "frontend-tester": {
+      "id": "frontend-tester",
+      "name": "FrontendTester",
+      "status": "registered",
+      "type": "subagent",
+      "team": "frontend",
+      "path": ".opencode/agent/teams/frontend/frontend-tester/SKILL.md",
+      "capabilities": ["testing", "frontend", "e2e"],
+      "lastSeen": null
+    },
+    "backend-planner": {
+      "id": "backend-planner",
+      "name": "BackendPlanner",
+      "status": "registered",
+      "type": "subagent",
+      "team": "backend",
+      "path": ".opencode/agent/teams/backend/backend-planner/SKILL.md",
+      "capabilities": ["planning", "backend", "api-design"],
+      "lastSeen": null
+    },
+    "backend-coder": {
+      "id": "backend-coder",
+      "name": "BackendCoder",
+      "status": "registered",
+      "type": "subagent",
+      "team": "backend",
+      "path": ".opencode/agent/teams/backend/backend-coder/SKILL.md",
+      "capabilities": ["coding", "backend", "api-implementation"],
+      "lastSeen": null
+    },
+    "backend-devops": {
+      "id": "backend-devops",
+      "name": "BackendDevops",
+      "status": "registered",
+      "type": "subagent",
+      "team": "backend",
+      "path": ".opencode/agent/teams/backend/backend-devops/SKILL.md",
+      "capabilities": ["devops", "backend", "deployment"],
+      "lastSeen": null
+    },
+    "backend-tester": {
+      "id": "backend-tester",
+      "name": "BackendTester",
+      "status": "registered",
+      "type": "subagent",
+      "team": "backend",
+      "path": ".opencode/agent/teams/backend/backend-tester/SKILL.md",
+      "capabilities": ["testing", "backend", "integration"],
+      "lastSeen": null
+    }
+  }
+}

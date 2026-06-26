@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "taskId": "swarm-init-001",
+      "status": "completed",
+      "output": {
+        "stateFile": ".opencode/swarm/state.json",
+        "agentRegistry": ".opencode/swarm/agents/registry.json",
+        "messageSchema": ".opencode/swarm/messages/message.schema.json",
+        "teams": {
+          "auth": {
+            "agents": ["auth-planner", "auth-coder", "auth-security-reviewer", "auth-test-engineer"]
+          },
+          "frontend": {
+            "agents": [
+              "frontend-planner",
+              "frontend-coder",
+              "frontend-ui-specialist",
+              "frontend-tester"
+            ]
+          },
+          "backend": {
+            "agents": ["backend-planner", "backend-coder", "backend-devops", "backend-tester"]
+          }
+        }
+      },
+      "completedAt": "2026-06-26T11:44:02Z"
+    }
+  ]
+}

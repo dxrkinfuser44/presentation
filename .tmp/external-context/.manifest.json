@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-06-22T00:00:00Z",
+  "libraries": {
+    "express": {
+      "files": [
+        {
+          "filename": "static-files.md",
+          "topic": "express.static and static file serving",
+          "fetched": "2026-06-22T00:00:00Z",
+          "source": "Context7 API"
+        },
+        {
+          "filename": "server-setup.md",
+          "topic": "app.listen and server configuration",
+          "fetched": "2026-06-22T00:00:00Z",
+          "source": "Context7 API"
+        },
+        {
+          "filename": "security.md",
+          "topic": "Security hardening and best practices",
+          "fetched": "2026-06-22T00:00:00Z",
+          "source": "Context7 API"
+        },
+        {
+          "filename": "error-handling.md",
+          "topic": "Error handling middleware",
+          "fetched": "2026-06-22T00:00:00Z",
+          "source": "Context7 API"
+        },
+        {
+          "filename": "compression.md",
+          "topic": "Response compression middleware",
+          "fetched": "2026-06-22T00:00:00Z",
+          "source": "Context7 API"
+        },
+        {
+          "filename": "complete-server.md",
+          "topic": "Complete production-ready server example",
+          "fetched": "2026-06-22T00:00:00Z",
+          "source": "Context7 API + Synthesis"
+        }
+      ]
+    }
+  }
+}

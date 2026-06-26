@@ -1,0 +1,22 @@
+{
+  "id": "passkey-auth-selfhosted-01",
+  "seq": "01",
+  "title": "Create server/lib/file-store.ts - JSON file storage with atomic writes",
+  "status": "completed",
+  "depends_on": [],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/lib/blob-store.ts"],
+  "acceptance_criteria": [
+    "File store provides CRUD operations for admin_key.json, sessions.json, admin_recovery.json",
+    "Atomic writes using temp file + rename pattern",
+    "File locking for concurrent writes",
+    "Challenge storage with 5-minute expiry",
+    "Recovery code generation with SHA-256 hashing"
+  ],
+  "deliverables": ["server/lib/file-store.ts"],
+  "started_at": "2026-06-26T12:32:00Z",
+  "completed_at": "2026-06-26T12:35:00Z",
+  "completion_summary": "Created file-store.ts with atomic writes, file locking, and all storage operations for admin key, sessions, challenges, and recovery codes"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "passkey-auth-vercel-06",
+  "seq": "06",
+  "title": "Update api/lib/blob-store.ts - Add recovery code storage and session management",
+  "status": "completed",
+  "depends_on": ["01"],
+  "parallel": false,
+  "suggested_agent": "coder-agent",
+  "context_files": [".plans/1782434278093-passkey-auth-dual-hosting.md"],
+  "reference_files": ["api/lib/blob-store.ts"],
+  "acceptance_criteria": [
+    "Add challenge storage functions",
+    "Add recovery code storage functions",
+    "Add recovery code generation (10 codes)",
+    "Add recovery code verification (one-time use)"
+  ],
+  "deliverables": ["api/lib/blob-store.ts"],
+  "started_at": "2026-06-26T02:42:00Z",
+  "completed_at": "2026-06-26T02:45:00Z",
+  "completion_summary": "Added challenge storage with 5-minute expiry, recovery code storage with hashing, and session management functions"
+}

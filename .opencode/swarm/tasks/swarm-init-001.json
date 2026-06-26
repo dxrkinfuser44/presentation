@@ -1,0 +1,10 @@
+{
+  "id": "swarm-init-001",
+  "title": "Initialize swarm infrastructure",
+  "status": "completed",
+  "priority": "high",
+  "createdBy": "swarm-coordinator",
+  "createdAt": "2026-06-26T11:44:02Z",
+  "description": "Set up swarm state, agent registry, and message routing",
+  "completionSummary": "Created swarm infrastructure with state management, agent registry, and team definitions"
+}

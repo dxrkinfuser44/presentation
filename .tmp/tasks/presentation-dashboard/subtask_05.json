@@ -1,0 +1,22 @@
+{
+  "id": "presentation-dashboard-05",
+  "seq": "05",
+  "title": "Server logging — minimal request logging with timing",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-01-28T00:00:00Z",
+  "completed_at": "2026-01-28T00:00:00Z",
+  "completion_summary": "Implemented minimal request logging middleware with configurable log level",
+  "depends_on": ["01"],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["server/index.js"],
+  "acceptance_criteria": [
+    "Logs method, path, status code, and response time in ms",
+    "No external logging dependencies beyond what's in package.json",
+    "Log format is consistent and readable",
+    "Configurable log level via env var (optional)"
+  ],
+  "deliverables": ["server/middleware/logger.js"]
+}

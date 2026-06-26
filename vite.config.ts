@@ -1,13 +1,14 @@
-import { defineConfig } from 'vite'
-import { resolve } from 'path'
+import { defineConfig } from "vite";
+import { resolve } from "path";
 
 export default defineConfig({
-  base: '/presentation/',
+  base: "/presentation/",
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-      }
-    }
-  }
-})
+        main: resolve(__dirname, "index.html"),
+      },
+    },
+  },
+  staged: { "*": "vp check --fix" },
+});

@@ -1,0 +1,24 @@
+{
+  "id": "presentation-dashboard-12",
+  "seq": "12",
+  "title": "Bind and port forward check — verify WSL2/Windows boundary",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-06-22T00:00:00Z",
+  "depends_on": [],
+  "parallel": true,
+  "suggested_agent": "CoderAgent",
+  "context_files": [".opencode/context/core/standards/code-quality.md"],
+  "reference_files": ["server/index.js"],
+  "acceptance_criteria": [
+    "Express binds to 0.0.0.0:<port> confirmed in code",
+    "Port availability checked on both WSL2 and Windows sides",
+    "Test command provided: curl http://localhost:<port> from PowerShell",
+    "WSL2 networking mode documented (NAT vs mirrored)",
+    ".wslconfig checked if relevant"
+  ],
+  "deliverables": ["deploy/port-forward-check.md"],
+  "started_at": "2026-06-22T00:00:00Z",
+  "completed_at": "2026-06-22T00:01:00Z",
+  "completion_summary": "Created deploy/network-check.md with WSL2 networking modes, 0.0.0.0 binding rationale, port checks for both sides, PowerShell test command, and troubleshooting guide"
+}
