@@ -142,7 +142,7 @@ export interface Challenge {
 
 export async function storeChallenge(challengeId: string, data: Challenge): Promise<void> {
   await put(`challenges/${challengeId}.json`, JSON.stringify(data), {
-    access: "public",
+    access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
   });

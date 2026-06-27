@@ -1,7 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import crypto from "crypto";
-import { verifyAuthenticationResponse } from "@simplewebauthn/server";
-import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 import { getAdminKey, setAdminKey, addSession, getChallenge } from "../lib/blob-store.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -18,28 +16,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const EXPECTED_ORIGIN = process.env.EXPECTED_ORIGIN || "https://" + RP_ID;
 
   try {
-    const { challengeId, ...response } = req.body as AuthenticationResponseJSON & {
-      challengeId: string;
-    };
+    const { challengeId, ...response } = req.body as Record<string, any>;
 
     if (!challengeId) {
       return res.status(400).json({ error: "Missing challengeId" });
     }
 
-    // Retrieve stored challenge from blob storage
     const storedChallenge = await getChallenge(challengeId);
     if (!storedChallenge) {
       return res.status(400).json({ error: "Invalid or expired challenge" });
     }
 
-    // Retrieve stored admin credential
     const adminKey = await getAdminKey();
     if (!adminKey) {
       return res.status(401).json({ error: "No passkey registered" });
     }
 
+    const { verifyAuthenticationResponse } = await import("@simplewebauthn/server");
+
     const verification = await verifyAuthenticationResponse({
-      response,
+      response: response as any,
       expectedChallenge: storedChallenge.challenge,
       expectedOrigin: EXPECTED_ORIGIN,
       expectedRPID: RP_ID,
@@ -55,13 +51,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(401).json({ error: "Authentication verification failed" });
     }
 
-    // Update sign count in stored credential
     await setAdminKey({
       ...adminKey,
       signCount: verification.authenticationInfo.newCounter,
     });
 
-    // Create session
     const token = crypto.randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 

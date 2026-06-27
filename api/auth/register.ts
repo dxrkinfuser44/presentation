@@ -1,6 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { verifyRegistrationResponse } from "@simplewebauthn/server";
-import type { RegistrationResponseJSON } from "@simplewebauthn/server";
+import crypto from "crypto";
 import {
   getAdminKey,
   setAdminKey,
@@ -22,10 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const EXPECTED_ORIGIN = process.env.EXPECTED_ORIGIN || "https://" + RP_ID;
 
   try {
-    const { registrationToken, challengeId, ...response } = req.body as RegistrationResponseJSON & {
-      registrationToken: string;
-      challengeId: string;
-    };
+    const { registrationToken, challengeId, ...response } = req.body as Record<string, any>;
 
     const expectedToken = process.env.REGISTRATION_SECRET;
     if (!expectedToken) {
@@ -49,8 +45,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: "Invalid or expired challenge" });
     }
 
+    const { verifyRegistrationResponse } = await import("@simplewebauthn/server");
+
     const verification = await verifyRegistrationResponse({
-      response,
+      response: response as any,
       expectedChallenge: storedChallenge.challenge,
       expectedOrigin: EXPECTED_ORIGIN,
       expectedRPID: RP_ID,

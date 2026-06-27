@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { generateRegistrationOptions, generateAuthenticationOptions } from "@simplewebauthn/server";
-import { getAdminKey, storeChallenge } from "../lib/blob-store.js";
 import crypto from "crypto";
+import { getAdminKey, storeChallenge } from "../lib/blob-store.js";
 
 const RP_NAME = process.env.RP_NAME || "Presentation";
 
@@ -19,6 +18,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const { type } = req.body;
+
+    const { generateRegistrationOptions, generateAuthenticationOptions } =
+      await import("@simplewebauthn/server");
 
     if (type === "register") {
       const challengeId = crypto.randomBytes(16).toString("hex");
