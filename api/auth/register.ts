@@ -67,19 +67,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: "Invalid clientDataJSON" });
     }
 
-    // Verify RP ID
-    if (clientData.rpId !== EXPECTED_RP_ID) {
-      return res.status(400).json({ error: "Invalid RP ID" });
+    // Verify origin
+    const expectedOrigin = "https://" + EXPECTED_RP_ID;
+    if (clientData.origin !== expectedOrigin) {
+      return res.status(400).json({ error: "Invalid origin" });
     }
 
-    // Verify attestation type (we accept both 'Basic' and 'Self' attestation)
-    if (!clientData.attestation || !["Basic", "Self"].includes(clientData.attestation)) {
-      return res.status(400).json({ error: "Invalid attestation type" });
-    }
-
-    // Verify token binding (if present)
-    if (clientData.tokenBinding) {
-      // In production, verify token binding
+    // Verify this is a creation event
+    if (clientData.type !== "webauthn.create") {
+      return res.status(400).json({ error: "Invalid challenge type" });
     }
 
     // Check if credential already exists
@@ -117,33 +113,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
  * This is a simplified version - in production, you'd want full COSE verification
  */
 export async function verifyAttestation(
-  credentialId: string,
-  publicKey: string,
+  _credentialId: string,
+  _publicKey: string,
   clientDataJSON: string,
   _attestationBuffer: string,
 ): Promise<boolean> {
   try {
-    // Parse client data
-    const clientData = JSON.parse(Buffer.from(clientDataJSON, "base64").toString("utf8")) as {
-      rpId: string;
-      attestation?: string;
-      tokenBinding?: any;
-      [key: string]: any;
-    };
-
-    // Verify RP ID
-    if (clientData.rpId !== EXPECTED_RP_ID) {
-      return false;
-    }
-
-    // In a production implementation, you would:
-    // 1. Parse the attestation buffer (COSE format)
-    // 2. Extract the attested credential data
-    // 3. Verify the signature using the attestation certificate
-    // 4. Verify the credential ID and public key match
-
-    // For now, we accept the registration if the challenge was verified
-    return true;
+    const clientData = JSON.parse(Buffer.from(clientDataJSON, "base64").toString("utf8"));
+    return (
+      clientData.type === "webauthn.create" && clientData.origin === "https://" + EXPECTED_RP_ID
+    );
   } catch {
     return false;
   }
