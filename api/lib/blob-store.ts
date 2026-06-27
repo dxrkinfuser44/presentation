@@ -1,5 +1,26 @@
-import { list, put } from "@vercel/blob";
+import { list, put, get } from "@vercel/blob";
 import * as _crypto from "node:crypto";
+
+async function readBlobContent(url: string): Promise<string> {
+  const result = await get(url, { access: "private" });
+  if (!result || result.statusCode !== 200) return "";
+  const reader = result.stream.getReader();
+  const chunks: Uint8Array[] = [];
+  let totalLen = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    totalLen += value.length;
+  }
+  const merged = new Uint8Array(totalLen);
+  let offset = 0;
+  for (const c of chunks) {
+    merged.set(c, offset);
+    offset += c.length;
+  }
+  return new TextDecoder().decode(merged);
+}
 
 export interface PresentationMetadata {
   id: string;
@@ -27,8 +48,8 @@ export async function getManifest(): Promise<PresentationMetadata[]> {
   try {
     const { blobs } = await list({ prefix: "manifest.json", limit: 1 });
     if (blobs.length === 0) return [];
-    const res = await fetch(blobs[0].url);
-    return await res.json();
+    const content = await readBlobContent(blobs[0].url);
+    return JSON.parse(content);
   } catch (error) {
     console.error("Error fetching manifest:", error);
     return [];
@@ -40,6 +61,7 @@ export async function setManifest(data: PresentationMetadata[]): Promise<void> {
     access: "public",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
 
@@ -47,8 +69,8 @@ export async function getAdminKey(): Promise<AdminKey | null> {
   try {
     const { blobs } = await list({ prefix: "admin_key.json", limit: 1 });
     if (blobs.length === 0) return null;
-    const res = await fetch(blobs[0].url);
-    return await res.json();
+    const content = await readBlobContent(blobs[0].url);
+    return JSON.parse(content);
   } catch (error) {
     console.error("Error fetching admin key:", error);
     return null;
@@ -60,6 +82,7 @@ export async function setAdminKey(key: AdminKey): Promise<void> {
     access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
 
@@ -80,8 +103,8 @@ export async function getSessions(): Promise<Session[]> {
   try {
     const { blobs } = await list({ prefix: "sessions.json", limit: 1 });
     if (blobs.length === 0) return [];
-    const res = await fetch(blobs[0].url);
-    return await res.json();
+    const content = await readBlobContent(blobs[0].url);
+    return JSON.parse(content);
   } catch (error) {
     console.error("Error fetching sessions:", error);
     return [];
@@ -93,6 +116,7 @@ export async function setSessions(sessions: Session[]): Promise<void> {
     access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
 
@@ -152,8 +176,8 @@ export async function getChallenge(challengeId: string): Promise<Challenge | nul
   try {
     const { blobs } = await list({ prefix: `challenges/${challengeId}.json`, limit: 1 });
     if (blobs.length === 0) return null;
-    const res = await fetch(blobs[0].url);
-    return await res.json();
+    const content = await readBlobContent(blobs[0].url);
+    return JSON.parse(content);
   } catch (error) {
     console.error("Error fetching challenge:", error);
     return null;
@@ -186,8 +210,8 @@ export async function getRecoveryCodes(): Promise<RecoveryCode[]> {
   try {
     const { blobs } = await list({ prefix: "admin_recovery.json", limit: 1 });
     if (blobs.length === 0) return [];
-    const res = await fetch(blobs[0].url);
-    return await res.json();
+    const content = await readBlobContent(blobs[0].url);
+    return JSON.parse(content);
   } catch (error) {
     console.error("Error fetching recovery codes:", error);
     return [];
@@ -199,6 +223,7 @@ export async function setRecoveryCodes(codes: RecoveryCode[]): Promise<void> {
     access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
 

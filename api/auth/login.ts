@@ -1,8 +1,4 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import crypto from "crypto";
-import { getAdminKey, setAdminKey, addSession, getChallenge } from "../lib/blob-store.js";
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -22,6 +18,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: "Missing challengeId" });
     }
 
+    const [
+      { getAdminKey, setAdminKey, addSession, getChallenge },
+      { verifyAuthenticationResponse },
+    ] = await Promise.all([import("../lib/blob-store.js"), import("@simplewebauthn/server")]);
+
     const storedChallenge = await getChallenge(challengeId);
     if (!storedChallenge) {
       return res.status(400).json({ error: "Invalid or expired challenge" });
@@ -31,8 +32,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!adminKey) {
       return res.status(401).json({ error: "No passkey registered" });
     }
-
-    const { verifyAuthenticationResponse } = await import("@simplewebauthn/server");
 
     const verification = await verifyAuthenticationResponse({
       response: response as any,
@@ -56,6 +55,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       signCount: verification.authenticationInfo.newCounter,
     });
 
+    const crypto = await import("crypto");
     const token = crypto.randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 

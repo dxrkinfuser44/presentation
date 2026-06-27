@@ -1,10 +1,4 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import crypto from "crypto";
-import { getAdminKey, storeChallenge } from "../lib/blob-store.js";
-
-const RP_NAME = process.env.RP_NAME || "Presentation";
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -18,12 +12,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const { type } = req.body;
+    const RP_NAME = process.env.RP_NAME || "Presentation";
 
-    const { generateRegistrationOptions, generateAuthenticationOptions } =
-      await import("@simplewebauthn/server");
+    const [
+      { getAdminKey, storeChallenge },
+      { generateRegistrationOptions, generateAuthenticationOptions },
+      nodeCrypto,
+    ] = await Promise.all([
+      import("../lib/blob-store.js"),
+      import("@simplewebauthn/server"),
+      import("node:crypto"),
+    ]);
 
     if (type === "register") {
-      const challengeId = crypto.randomBytes(16).toString("hex");
+      const challengeId = nodeCrypto.default.randomBytes(16).toString("hex");
 
       const options = await generateRegistrationOptions({
         rpName: RP_NAME,
@@ -46,7 +48,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (type === "login") {
-      const challengeId = crypto.randomBytes(16).toString("hex");
+      const challengeId = nodeCrypto.default.randomBytes(16).toString("hex");
       const adminKey = await getAdminKey();
 
       const allowCredentials = adminKey
