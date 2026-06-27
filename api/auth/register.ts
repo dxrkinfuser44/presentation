@@ -30,7 +30,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       challenge,
       clientDataJSON,
       attestationBuffer,
+      registrationToken,
     } = req.body;
+
+    // Verify registration token
+    const expectedToken = process.env.REGISTRATION_SECRET;
+    if (!expectedToken) {
+      return res.status(500).json({ error: "Registration is not configured" });
+    }
+    if (!registrationToken || registrationToken !== expectedToken) {
+      return res.status(403).json({ error: "Invalid registration link" });
+    }
 
     // Validate required fields
     if (!credentialId || !publicKey || typeof alg !== "number") {

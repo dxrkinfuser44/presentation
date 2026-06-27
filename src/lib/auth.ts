@@ -53,6 +53,11 @@ export async function getChallenge(): Promise<{ challengeId: string; challenge: 
 
 export const CREDENTIAL_ID_KEY = "presentation_credential_id";
 
+export function getRegistrationToken(): string | null {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("register");
+}
+
 function getCredentialId(): string | null {
   try {
     return localStorage.getItem(CREDENTIAL_ID_KEY);
@@ -69,7 +74,11 @@ function setCredentialId(id: string): void {
   }
 }
 
-export async function register(challengeId: string, challenge: string): Promise<string[] | null> {
+export async function register(
+  challengeId: string,
+  challenge: string,
+  registrationToken: string,
+): Promise<string[] | null> {
   try {
     if (!window.PublicKeyCredential) {
       alert("Passkeys are not supported in this browser.");
@@ -116,6 +125,7 @@ export async function register(challengeId: string, challenge: string): Promise<
         challenge,
         clientDataJSON,
         attestationBuffer: attestationObject,
+        registrationToken,
       }),
     });
 

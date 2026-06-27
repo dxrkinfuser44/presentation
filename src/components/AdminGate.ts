@@ -7,6 +7,7 @@ import {
   setToken,
   getToken,
   clearToken,
+  getRegistrationToken,
 } from "../lib/auth.js";
 import { createUploadModal } from "./UploadModal.js";
 
@@ -123,9 +124,13 @@ export function renderAdminGate(
   });
 
   modalContent.appendChild(loginBtn);
-  modalContent.appendChild(registerBtn);
   modalContent.appendChild(recoverBtn);
   modalContent.appendChild(cancelBtn);
+
+  const registrationToken = getRegistrationToken();
+  if (registrationToken) {
+    modalContent.insertBefore(registerBtn, recoverBtn);
+  }
   authModal.appendChild(modalContent);
   document.body.appendChild(authModal);
 
@@ -174,7 +179,7 @@ export function renderAdminGate(
     statusEl.textContent = "Waiting for passkey...";
     try {
       const { challengeId, challenge } = await getChallenge();
-      const codes = await register(challengeId, challenge);
+      const codes = await register(challengeId, challenge, registrationToken!);
       if (codes) {
         statusEl.textContent = "Registration successful! Save these recovery codes:";
         alert(
