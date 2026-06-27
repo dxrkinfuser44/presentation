@@ -1,56 +1,71 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { generateRegistrationOptions, generateAuthenticationOptions } from "@simplewebauthn/server";
+import { getAdminKey, storeChallenge } from "../lib/blob-store.js";
 import crypto from "crypto";
-import { storeChallenge, getChallenge, deleteChallenge } from "../lib/blob-store.js";
 
-const CHALLENGE_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
+const RP_ID = process.env.RP_ID;
+if (!RP_ID) {
+  throw new Error("RP_ID environment variable must be set");
+}
 
-export default async function handler(request: VercelRequest, response: VercelResponse) {
-  if (request.method !== "GET") {
-    return response.status(405).json({ error: "Method Not Allowed" });
+const RP_NAME = process.env.RP_NAME || "Presentation";
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    // Generate 32-byte cryptographically random challenge
-    const challenge = crypto.randomBytes(32).toString("hex");
-    const timestamp = Date.now();
-    const challengeId = crypto.randomBytes(16).toString("hex");
+    const { type } = req.body;
 
-    // Store challenge with timestamp
-    await storeChallenge(challengeId, { challenge, timestamp });
+    if (type === "register") {
+      const challengeId = crypto.randomBytes(16).toString("hex");
 
-    return response.status(200).json({ challengeId, challenge });
+      const options = await generateRegistrationOptions({
+        rpName: RP_NAME,
+        rpID: RP_ID!,
+        userName: "admin",
+        userDisplayName: "Admin",
+        attestationType: "none",
+        authenticatorSelection: {
+          residentKey: "discouraged",
+          userVerification: "required",
+        },
+      });
+
+      await storeChallenge(challengeId, {
+        challenge: options.challenge,
+        timestamp: Date.now(),
+      });
+
+      return res.status(200).json({ challengeId, options });
+    }
+
+    if (type === "login") {
+      const challengeId = crypto.randomBytes(16).toString("hex");
+      const adminKey = await getAdminKey();
+
+      const allowCredentials = adminKey
+        ? [{ id: adminKey.credentialId, transports: ["internal" as const] }]
+        : [];
+
+      const options = await generateAuthenticationOptions({
+        rpID: RP_ID!,
+        allowCredentials,
+        userVerification: "required",
+      });
+
+      await storeChallenge(challengeId, {
+        challenge: options.challenge,
+        timestamp: Date.now(),
+      });
+
+      return res.status(200).json({ challengeId, options });
+    }
+
+    return res.status(400).json({ error: "Invalid type. Must be 'register' or 'login'" });
   } catch (error) {
-    console.error("Failed to generate challenge:", error);
-    return response.status(500).json({ error: "Internal Server Error" });
+    console.error("Challenge error:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
-}
-
-/**
- * Verify and consume a challenge (single-use)
- * Returns the challenge if valid, null if expired or already used
- */
-export async function verifyChallenge(challengeId: string, challenge: string): Promise<boolean> {
-  const stored = await getChallenge(challengeId);
-
-  if (!stored) {
-    return false;
-  }
-
-  const now = Date.now();
-
-  // Check if challenge has expired (5 minutes)
-  if (now - stored.timestamp > CHALLENGE_EXPIRY_MS) {
-    await deleteChallenge(challengeId);
-    return false;
-  }
-
-  // Verify challenge matches
-  if (stored.challenge !== challenge) {
-    return false;
-  }
-
-  // Delete challenge (single-use)
-  await deleteChallenge(challengeId);
-
-  return true;
 }

@@ -1,3 +1,5 @@
+import { startRegistration, startAuthentication } from "@simplewebauthn/browser";
+
 const API_PREFIX = (() => {
   const host = window.location.hostname;
   const port = window.location.port;
@@ -44,11 +46,18 @@ export async function verifyToken(token: string): Promise<boolean> {
   }
 }
 
-export async function getChallenge(): Promise<{ challengeId: string; challenge: string }> {
-  const res = await fetch(`${API_PREFIX}/challenge`);
+export async function getChallenge(type: "register" | "login"): Promise<{
+  challengeId: string;
+  options: any;
+}> {
+  const res = await fetch(`${API_PREFIX}/challenge`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ type }),
+  });
   if (!res.ok) throw new Error("Failed to get challenge");
   const data = await res.json();
-  return { challengeId: data.challengeId, challenge: data.challenge };
+  return { challengeId: data.challengeId, options: data.options };
 }
 
 export const CREDENTIAL_ID_KEY = "presentation_credential_id";
@@ -76,55 +85,18 @@ function setCredentialId(id: string): void {
 
 export async function register(
   challengeId: string,
-  challenge: string,
+  options: any,
   registrationToken: string,
 ): Promise<string[] | null> {
   try {
-    if (!window.PublicKeyCredential) {
-      alert("Passkeys are not supported in this browser.");
-      return null;
-    }
-
-    const challengeBuffer = new Uint8Array(
-      challenge.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16)),
-    );
-
-    const cred = (await navigator.credentials.create({
-      publicKey: {
-        challenge: challengeBuffer,
-        rp: { name: "Presentation", id: window.location.hostname },
-        user: {
-          id: Uint8Array.from(window.crypto.getRandomValues(new Uint8Array(16))),
-          name: "admin",
-          displayName: "Admin",
-        },
-        pubKeyCredParams: [{ type: "public-key", alg: -7 }],
-        authenticatorSelection: {
-          authenticatorAttachment: "platform",
-          userVerification: "required",
-        },
-        timeout: 60000,
-      },
-    })) as any as PublicKeyCredential;
-
-    const attestation = (cred as any).response as any;
-    const clientDataJSON = btoa(String.fromCharCode(...new Uint8Array(attestation.clientDataJSON)));
-    const attestationObject = btoa(
-      String.fromCharCode(...new Uint8Array(attestation.attestationObject)),
-    );
-    const rawId = btoa(String.fromCharCode(...new Uint8Array(cred.rawId)));
+    const credential = await startRegistration({ optionsJSON: options });
 
     const res = await fetch(`${API_PREFIX}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        credentialId: rawId,
-        publicKey: attestationObject,
-        alg: -7,
+        ...credential,
         challengeId,
-        challenge,
-        clientDataJSON,
-        attestationBuffer: attestationObject,
         registrationToken,
       }),
     });
@@ -135,7 +107,7 @@ export async function register(
       return null;
     }
 
-    setCredentialId(rawId);
+    setCredentialId(credential.id);
 
     const data = await res.json();
     return data.recoveryCodes || null;
@@ -146,57 +118,16 @@ export async function register(
   }
 }
 
-export async function login(challengeId: string, challenge: string): Promise<string | null> {
+export async function login(challengeId: string, options: any): Promise<string | null> {
   try {
-    if (!window.PublicKeyCredential) {
-      alert("Passkeys are not supported in this browser.");
-      return null;
-    }
-
-    const credentialId = getCredentialId();
-    if (!credentialId) {
-      alert("No passkey registered. Please register first.");
-      return null;
-    }
-
-    const challengeBuffer = new Uint8Array(
-      challenge.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16)),
-    );
-
-    const assertion = (await navigator.credentials.get({
-      publicKey: {
-        challenge: challengeBuffer,
-        allowCredentials: [
-          {
-            id: Uint8Array.from(atob(credentialId), (c) => c.charCodeAt(0)),
-            type: "public-key",
-            transports: ["internal"],
-          },
-        ],
-        userVerification: "required",
-        timeout: 60000,
-      },
-    })) as any;
-
-    const assertionResponse = assertion.response as any;
-    const clientDataJSON = btoa(
-      String.fromCharCode(...new Uint8Array(assertionResponse.clientDataJSON)),
-    );
-    const authenticatorData = btoa(
-      String.fromCharCode(...new Uint8Array(assertionResponse.authenticatorData)),
-    );
-    const signature = btoa(String.fromCharCode(...new Uint8Array(assertionResponse.signature)));
+    const credential = await startAuthentication({ optionsJSON: options });
 
     const res = await fetch(`${API_PREFIX}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        credentialId,
+        ...credential,
         challengeId,
-        challenge,
-        clientDataJSON,
-        authenticatorData,
-        signature,
       }),
     });
 
