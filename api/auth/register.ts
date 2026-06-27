@@ -8,17 +8,18 @@ import {
   getChallenge,
 } from "../lib/blob-store.js";
 
-const RP_ID = process.env.RP_ID;
-if (!RP_ID) {
-  throw new Error("RP_ID environment variable must be set");
-}
-
-const EXPECTED_ORIGIN = process.env.EXPECTED_ORIGIN || "https://" + RP_ID;
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+
+  const RP_ID = process.env.RP_ID;
+  if (!RP_ID) {
+    return res
+      .status(500)
+      .json({ error: "RP_ID environment variable is not configured on the server" });
+  }
+  const EXPECTED_ORIGIN = process.env.EXPECTED_ORIGIN || "https://" + RP_ID;
 
   try {
     const { registrationToken, challengeId, ...response } = req.body as RegistrationResponseJSON & {
@@ -52,7 +53,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       response,
       expectedChallenge: storedChallenge.challenge,
       expectedOrigin: EXPECTED_ORIGIN,
-      expectedRPID: RP_ID!,
+      expectedRPID: RP_ID,
       requireUserVerification: true,
     });
 
