@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { put } from "@vercel/blob";
-import { getManifest, setManifest } from "./lib/blob-store.js";
-import { commitFile } from "./lib/git-commit.js";
+import { getManifest, setManifest } from "../lib/blob-store.js";
+import { commitFile } from "../lib/git-commit.js";
 
 export interface PresentationMetadata {
   id: string;

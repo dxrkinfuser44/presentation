@@ -13,7 +13,7 @@
   "scripts": {
     "discover": "tsx scripts/discover.ts",
     "dev": "npm run discover && vite",
-    "build": "npm run discover && vite build && cp -r html dist/html",
+    "build": "npm run discover && vite build && node -e \"const fs=require('fs');fs.cpSync('html','dist/html',{recursive:true})\"",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -22,6 +22,8 @@
   "devDependencies": {
     "@types/node": "^26.0.1",
     "@types/plotly.js": "^3.0.10",
+    "@vercel/blob": "^2.5.0",
+    "@vercel/node": "^5.8.21",
     "@vitejs/plugin-react": "^6.0.2",
     "glob": "^13.0.6",
     "tsx": "^4.22.4",

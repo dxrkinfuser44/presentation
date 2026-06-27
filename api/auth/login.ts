@@ -4,7 +4,10 @@ import { getAdminKey, setAdminKey, addSession } from "../lib/blob-store.js";
 import { verifyChallenge } from "./challenge.js";
 
 // Expected RP ID
-const EXPECTED_RP_ID = process.env.RP_ID || "dxrkinfuser44.github.io";
+const EXPECTED_RP_ID = process.env.RP_ID;
+if (!EXPECTED_RP_ID) {
+  throw new Error("RP_ID environment variable must be set");
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -39,9 +42,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Parse client data
-    let _clientData: any;
+    let clientData: any;
     try {
-      _clientData = JSON.parse(Buffer.from(clientDataJSON, "base64").toString("utf8"));
+      clientData = JSON.parse(Buffer.from(clientDataJSON, "base64").toString("utf8"));
     } catch {
       return res.status(400).json({ error: "Invalid clientDataJSON" });
     }
@@ -52,7 +55,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Verify origin
-    if (!clientData.origin || !clientData.origin.includes(EXPECTED_RP_ID)) {
+    const expectedOrigin = "https://" + EXPECTED_RP_ID;
+    if (!clientData.origin || clientData.origin !== expectedOrigin) {
       return res.status(400).json({ error: "Invalid origin" });
     }
 
@@ -101,11 +105,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await setAdminKey(updatedKey);
 
     // Create session
-    const _token = crypto.randomBytes(32).toString("hex");
+    const token = crypto.randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
     await addSession({
-      token: _token,
+      token,
       createdAt: new Date().toISOString(),
       expiresAt,
     });
@@ -151,7 +155,7 @@ async function verifySignature(
     // Convert IEEE 1363 to DER if needed
     const derSignature = ieee1363ToDer(signature);
 
-    return crypto.verify("sha256", derSignature, cryptoKey, data);
+    return crypto.verify("sha256", data, cryptoKey, derSignature);
   } catch (error) {
     console.error("Signature verification error:", error);
     return false;

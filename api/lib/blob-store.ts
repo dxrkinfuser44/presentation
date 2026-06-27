@@ -57,7 +57,7 @@ export async function getAdminKey(): Promise<AdminKey | null> {
 
 export async function setAdminKey(key: AdminKey): Promise<void> {
   await put("admin_key.json", JSON.stringify(key), {
-    access: "public",
+    access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
   });
@@ -67,7 +67,7 @@ export async function setAdminKey(key: AdminKey): Promise<void> {
  * Generate a random token
  */
 export function generateToken(length: number = 32): string {
-  return __crypto.randomBytes(length).toString("hex");
+  return _crypto.randomBytes(length).toString("hex");
 }
 
 export interface Session {
@@ -90,7 +90,7 @@ export async function getSessions(): Promise<Session[]> {
 
 export async function setSessions(sessions: Session[]): Promise<void> {
   await put("sessions.json", JSON.stringify(sessions), {
-    access: "public",
+    access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
   });
@@ -108,15 +108,27 @@ export async function removeSession(token: string): Promise<void> {
   await setSessions(filtered);
 }
 
+let lastCleanupTime = 0;
+const CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+
 export async function findSession(token: string): Promise<Session | null> {
   const sessions = await getSessions();
   const now = new Date();
-  for (const s of sessions) {
-    if (s.token === token && new Date(s.expiresAt) > now) {
-      return s;
+  const valid = sessions.filter((s) => s.token === token && new Date(s.expiresAt) > now);
+  if (valid.length === 0) return null;
+
+  // Lazy cleanup: only run every 5 minutes
+  const nowMs = Date.now();
+  if (nowMs - lastCleanupTime > CLEANUP_INTERVAL_MS) {
+    lastCleanupTime = nowMs;
+    const expired = sessions.filter((s) => new Date(s.expiresAt) <= now);
+    if (expired.length > 0) {
+      const remaining = sessions.filter((s) => new Date(s.expiresAt) > now);
+      await setSessions(remaining);
     }
   }
-  return null;
+
+  return valid[0] ?? null;
 }
 
 // ============================================
@@ -184,7 +196,7 @@ export async function getRecoveryCodes(): Promise<RecoveryCode[]> {
 
 export async function setRecoveryCodes(codes: RecoveryCode[]): Promise<void> {
   await put("admin_recovery.json", JSON.stringify(codes), {
-    access: "public",
+    access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
   });
@@ -220,7 +232,7 @@ export async function generateRecoveryCodes(): Promise<string[]> {
 
   for (let i = 0; i < 10; i++) {
     // Generate 16-character alphanumeric code
-    const code = crypto
+    const code = _crypto
       .randomBytes(12)
       .toString("base64")
       .replace(/[^a-zA-Z0-9]/g, "")

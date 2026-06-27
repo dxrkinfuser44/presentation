@@ -1,4 +1,5 @@
 import "./style.css";
+import { renderAdminGate } from "./components/AdminGate.js";
 
 interface Presentation {
   id: string;
@@ -64,6 +65,10 @@ async function main() {
   `,
     )
     .join("");
+
+  renderAdminGate(document.body, {
+    onAuthenticated: () => {},
+  });
 }
 
 void main();

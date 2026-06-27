@@ -3,7 +3,10 @@ import { getAdminKey, setAdminKey, generateRecoveryCodes } from "../lib/blob-sto
 import { verifyChallenge } from "./challenge.js";
 
 // Expected RP ID (relying party ID) - should match your domain
-const EXPECTED_RP_ID = process.env.RP_ID || "dxrkinfuser44.github.io";
+const EXPECTED_RP_ID = process.env.RP_ID;
+if (!EXPECTED_RP_ID) {
+  throw new Error("RP_ID environment variable must be set");
+}
 
 export interface AdminKey {
   credentialId: string;

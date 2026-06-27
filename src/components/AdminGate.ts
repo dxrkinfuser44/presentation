@@ -1,4 +1,13 @@
-import { getChallenge, login, setToken, getToken } from "../lib/auth.js";
+import {
+  getChallenge,
+  login,
+  register,
+  recover,
+  verifyToken,
+  setToken,
+  getToken,
+  clearToken,
+} from "../lib/auth.js";
 import { createUploadModal } from "./UploadModal.js";
 
 export function renderAdminGate(
@@ -28,9 +37,9 @@ export function renderAdminGate(
     justifyContent: "center",
   });
 
-  // Modal for login
-  const loginModal = document.createElement("div");
-  Object.assign(loginModal.style, {
+  // Modal for auth
+  const authModal = document.createElement("div");
+  Object.assign(authModal.style, {
     position: "fixed",
     inset: "0",
     backgroundColor: "rgba(0,0,0,0.6)",
@@ -45,7 +54,7 @@ export function renderAdminGate(
     backgroundColor: "#fff",
     padding: "20px",
     borderRadius: "8px",
-    width: "300px",
+    width: "320px",
     textAlign: "center",
     fontFamily: "DM Sans, sans-serif",
     color: "#333",
@@ -54,6 +63,11 @@ export function renderAdminGate(
   const title = document.createElement("h3");
   title.textContent = "Admin Access";
   modalContent.appendChild(title);
+
+  const statusEl = document.createElement("p");
+  statusEl.style.marginTop = "8px";
+  statusEl.style.fontSize = "14px";
+  modalContent.appendChild(statusEl);
 
   const loginBtn = document.createElement("button");
   loginBtn.textContent = "Sign in with Passkey";
@@ -67,60 +81,128 @@ export function renderAdminGate(
     cursor: "pointer",
   });
 
+  const registerBtn = document.createElement("button");
+  registerBtn.textContent = "Register New Passkey";
+  Object.assign(registerBtn.style, {
+    marginTop: "10px",
+    padding: "8px 12px",
+    backgroundColor: "#28a745",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    marginLeft: "8px",
+  });
+
   const cancelBtn = document.createElement("button");
   cancelBtn.textContent = "Cancel";
   Object.assign(cancelBtn.style, {
     marginTop: "10px",
-    marginLeft: "10px",
     padding: "8px 12px",
     backgroundColor: "#ccc",
     color: "#333",
     border: "none",
     borderRadius: "4px",
     cursor: "pointer",
+    marginLeft: "8px",
+  });
+
+  const recoverBtn = document.createElement("button");
+  recoverBtn.textContent = "Use Recovery Code";
+  Object.assign(recoverBtn.style, {
+    marginTop: "10px",
+    padding: "8px 12px",
+    backgroundColor: "#ffc107",
+    color: "#333",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    display: "block",
+    width: "100%",
+    marginLeft: "0",
   });
 
   modalContent.appendChild(loginBtn);
+  modalContent.appendChild(registerBtn);
+  modalContent.appendChild(recoverBtn);
   modalContent.appendChild(cancelBtn);
-  loginModal.appendChild(modalContent);
-  document.body.appendChild(loginModal);
+  authModal.appendChild(modalContent);
+  document.body.appendChild(authModal);
 
-  const showLogin = () => (loginModal.style.display = "flex");
-  const hideLogin = () => (loginModal.style.display = "none");
+  const showAuth = (msg = "") => {
+    statusEl.textContent = msg;
+    authModal.style.display = "flex";
+  };
+  const hideAuth = () => (authModal.style.display = "none");
+
+  const completeAuth = (token: string) => {
+    setToken(token);
+    hideAuth();
+    callbacks.onAuthenticated(token);
+    const uploadModal = createUploadModal();
+    document.body.appendChild(uploadModal);
+  };
 
   button.addEventListener("click", async () => {
     const token = getToken();
     if (token) {
-      // Already authenticated, open upload modal
-      const uploadModal = createUploadModal();
-      document.body.appendChild(uploadModal);
-    } else {
-      showLogin();
+      const valid = await verifyToken(token);
+      if (valid) {
+        const uploadModal = createUploadModal();
+        document.body.appendChild(uploadModal);
+        return;
+      }
+      clearToken();
     }
+    showAuth("Choose an authentication method");
   });
 
   loginBtn.addEventListener("click", async () => {
+    statusEl.textContent = "Waiting for passkey...";
     try {
-      const challenge = await getChallenge();
-      // Simulate passkey credentialId
-      const mockCredentialId = `passkey-${Date.now()}`;
-      const token = await login(mockCredentialId, challenge);
-      if (token) {
-        setToken(token);
-        hideLogin();
-        callbacks.onAuthenticated(token);
-        // Open upload modal immediately after login
-        const uploadModal = createUploadModal();
-        document.body.appendChild(uploadModal);
-      } else {
-        alert("Login failed");
-      }
+      const { challengeId, challenge } = await getChallenge();
+      const token = await login(challengeId, challenge);
+      if (token) completeAuth(token);
+      else statusEl.textContent = "Login failed";
     } catch (e) {
       console.error(e);
-      alert("Login error");
+      statusEl.textContent = "Login error";
     }
   });
 
-  cancelBtn.addEventListener("click", hideLogin);
+  registerBtn.addEventListener("click", async () => {
+    statusEl.textContent = "Waiting for passkey...";
+    try {
+      const { challengeId, challenge } = await getChallenge();
+      const codes = await register(challengeId, challenge);
+      if (codes) {
+        statusEl.textContent = "Registration successful! Save these recovery codes:";
+        alert(
+          "Recovery codes:\n\n" +
+            codes.join("\n") +
+            "\n\nStore them securely. They won't be shown again.",
+        );
+      }
+    } catch (e) {
+      console.error(e);
+      statusEl.textContent = "Registration error";
+    }
+  });
+
+  recoverBtn.addEventListener("click", async () => {
+    const code = prompt("Enter recovery code:");
+    if (!code) return;
+    statusEl.textContent = "Verifying...";
+    try {
+      const token = await recover(code);
+      if (token) completeAuth(token);
+      else statusEl.textContent = "Invalid recovery code";
+    } catch (e) {
+      console.error(e);
+      statusEl.textContent = "Recovery error";
+    }
+  });
+
+  cancelBtn.addEventListener("click", hideAuth);
   container.appendChild(button);
 }
