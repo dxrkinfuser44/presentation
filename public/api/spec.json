@@ -1,0 +1,172 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Presentations API",
+    "version": "1.0.0",
+    "description": "Read-only static API for the dxrkinfuser44/presentation GitHub Pages site.\nAll endpoints return pre-generated JSON files. There are no POST endpoints on this domain.\nTo CREATE a new presentation, use the GitHub Contents API (see x-agent-guide).",
+    "contact": {
+      "url": "https://github.com/dxrkinfuser44/presentation"
+    }
+  },
+  "x-agent-guide": "/presentation/api/agent-guide.json",
+  "x-llms-txt": "/presentation/llms.txt",
+  "servers": [
+    {
+      "url": "https://dxrkinfuser44.github.io/presentation"
+    }
+  ],
+  "paths": {
+    "/api/manifest.json": {
+      "get": {
+        "operationId": "listPresentations",
+        "summary": "List all presentations",
+        "description": "Returns metadata for every presentation discovered in the html/ directory.",
+        "responses": {
+          "200": {
+            "description": "Array of presentation objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Manifest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/presentation/{id}.json": {
+      "get": {
+        "operationId": "getPresentation",
+        "summary": "Get a single presentation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Slug derived from the file path. See manifest for valid IDs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single presentation object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Presentation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agent-guide.json": {
+      "get": {
+        "operationId": "getAgentGuide",
+        "summary": "Full agent instructions for creating and managing presentations",
+        "responses": {
+          "200": {
+            "description": "Agent guide JSON"
+          }
+        }
+      }
+    },
+    "/llms.txt": {
+      "get": {
+        "operationId": "getLlmsTxt",
+        "summary": "LLM-readable plain text instructions",
+        "responses": {
+          "200": {
+            "description": "Plain text"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Presentation": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "subject",
+          "year",
+          "description",
+          "accent",
+          "bg",
+          "href",
+          "filePath"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "URL-safe slug derived from file path"
+          },
+          "title": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string",
+            "description": "e.g. PDHPE, Science, History, English, Commerce, Mathematics"
+          },
+          "year": {
+            "type": "integer",
+            "description": "School year group, e.g. 10"
+          },
+          "description": {
+            "type": "string"
+          },
+          "accent": {
+            "type": "string",
+            "description": "CSS hex colour for card accent strip"
+          },
+          "bg": {
+            "type": "string",
+            "description": "CSS hex colour for card background"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "href": {
+            "type": "string",
+            "description": "Absolute URL path to the presentation"
+          },
+          "filePath": {
+            "type": "string",
+            "description": "Repo-relative file path, used for GitHub API submissions"
+          },
+          "addedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Manifest": {
+        "type": "object",
+        "properties": {
+          "generated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "presentations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Presentation"
+            }
+          }
+        }
+      }
+    }
+  }
+}

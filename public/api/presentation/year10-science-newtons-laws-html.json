@@ -1,0 +1,13 @@
+{
+  "title": "Newton's Laws of Motion",
+  "subject": "Science",
+  "year": 10,
+  "description": "Interactive exploration of all three laws with worked examples and force diagrams.",
+  "accent": "#1a1a18",
+  "bg": "#f5f4f0",
+  "tags": ["physics", "science", "year10", "mechanics"],
+  "id": "year10-science-newtons-laws-html",
+  "href": "/presentation/html/year10/science/newtons laws.html",
+  "filePath": "html/year10/science/newtons laws.html",
+  "addedAt": "2026-06-27T01:11:44.667Z"
+}

@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { put } from "@vercel/blob";
-import { getManifest, setManifest } from "../lib/blob-store.js";
+import { getManifest, setManifest, findSession } from "../lib/blob-store.js";
 import { commitFile } from "../lib/git-commit.js";
 
 export interface PresentationMetadata {
@@ -29,6 +29,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const _token = authHeader.slice(7);
+
+    // Validate the session token
+    const session = await findSession(_token);
+    if (!session) {
+      return res.status(401).json({ error: "Invalid or expired session" });
+    }
 
     const { html, metadata } = req.body;
     if (!html || !metadata || !metadata.title || !metadata.subject || !metadata.year) {

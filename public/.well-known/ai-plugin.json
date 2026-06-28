@@ -1,0 +1,14 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Presentations",
+  "name_for_model": "presentations_site",
+  "description_for_human": "Browse and manage school presentations.",
+  "description_for_model": "Access the presentations site API. Use listPresentations to see all available presentations. Read agent-guide.json for full instructions on creating new presentations via the GitHub API. The site is static — all write operations go through the GitHub Contents API.",
+  "api": {
+    "type": "openapi",
+    "url": "https://dxrkinfuser44.github.io/presentation/api/spec.json"
+  },
+  "logo_url": "https://dxrkinfuser44.github.io/presentation/favicon.ico",
+  "contact_email": "see github repo",
+  "legal_info_url": "https://github.com/dxrkinfuser44/presentation"
+}

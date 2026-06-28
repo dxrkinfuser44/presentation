@@ -36,7 +36,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Delete from Vercel Blob
     try {
       const blobUrl = presentation.blobUrl;
-      if (blobUrl) {
+      if (blobUrl && typeof blobUrl === "string") {
         const urlParts = blobUrl.split("/");
         const blobKey = urlParts[urlParts.length - 1];
         await del(blobKey);

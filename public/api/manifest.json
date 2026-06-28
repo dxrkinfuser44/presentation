@@ -1,0 +1,33 @@
+{
+  "$schema": "/presentation/api/spec.json",
+  "generated": "2026-06-27T01:11:44.680Z",
+  "count": 2,
+  "presentations": [
+    {
+      "title": "Health Impacts of Vaping",
+      "subject": "PDHPE",
+      "year": 10,
+      "description": "Physical and systemic effects of vaping on the adolescent body, including respiratory and cardiovascular impacts.",
+      "accent": "#e8ff47",
+      "bg": "#0a0e1a",
+      "tags": ["health", "pdhpe", "year10"],
+      "id": "year10-pdhpe-vaping-presentation-html",
+      "href": "/presentation/html/year10/pdhpe/vaping-presentation.html",
+      "filePath": "html/year10/pdhpe/vaping-presentation.html",
+      "addedAt": "2026-06-27T01:11:44.670Z"
+    },
+    {
+      "title": "Newton's Laws of Motion",
+      "subject": "Science",
+      "year": 10,
+      "description": "Interactive exploration of all three laws with worked examples and force diagrams.",
+      "accent": "#1a1a18",
+      "bg": "#f5f4f0",
+      "tags": ["physics", "science", "year10", "mechanics"],
+      "id": "year10-science-newtons-laws-html",
+      "href": "/presentation/html/year10/science/newtons laws.html",
+      "filePath": "html/year10/science/newtons laws.html",
+      "addedAt": "2026-06-27T01:11:44.667Z"
+    }
+  ]
+}

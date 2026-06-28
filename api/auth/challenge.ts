@@ -25,7 +25,7 @@ export default async function handler(req: any, res: any) {
     ]);
 
     if (type === "register") {
-      const challengeId = nodeCrypto.default.randomBytes(16).toString("hex");
+      const challengeId = nodeCrypto.randomBytes(16).toString("hex");
 
       const options = await generateRegistrationOptions({
         rpName: RP_NAME,
@@ -48,7 +48,7 @@ export default async function handler(req: any, res: any) {
     }
 
     if (type === "login") {
-      const challengeId = nodeCrypto.default.randomBytes(16).toString("hex");
+      const challengeId = nodeCrypto.randomBytes(16).toString("hex");
       const adminKey = await getAdminKey();
 
       const allowCredentials = adminKey

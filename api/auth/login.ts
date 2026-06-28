@@ -52,7 +52,7 @@ export default async function handler(req: any, res: any) {
 
     await setAdminKey({
       ...adminKey,
-      signCount: verification.authenticationInfo.newCounter,
+      signCount: verification.authenticationInfo?.newCounter ?? adminKey.signCount,
     });
 
     const crypto = await import("crypto");

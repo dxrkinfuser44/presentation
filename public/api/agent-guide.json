@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "description": "Instructions for AI agents that want to read, create, or update presentations on this site.",
+  "reading": {
+    "summary": "Fetch manifest.json to get all presentations. Fetch /api/presentation/{id}.json for a single entry.",
+    "manifestUrl": "https://dxrkinfuser44.github.io/presentation/api/manifest.json",
+    "specUrl": "https://dxrkinfuser44.github.io/presentation/api/spec.json"
+  },
+  "creating": {
+    "summary": "This site is static (GitHub Pages). To add a presentation, commit an HTML file to the repo using the GitHub Contents API.",
+    "steps": [
+      "1. Produce a self-contained HTML file. All CSS and JS must be inline — no external assets.",
+      "2. Add the @presentation metadata comment block as the SECOND line of the file (immediately after <!doctype html>).",
+      "3. Place the file at html/{year}/{subject}/{slug}.html. Use lowercase, hyphens for spaces.",
+      "4. Commit it using the GitHub Contents API (PUT /repos/dxrkinfuser44/presentation/contents/{path}).",
+      "5. A GitHub Actions workflow runs automatically on push to main, discovers the file, rebuilds the dashboard, and deploys.",
+      "6. The presentation is live within ~60 seconds of the commit."
+    ],
+    "metadataFormat": {
+      "description": "This comment block must appear as the second line of the HTML file.",
+      "template": "<!--@presentation\n{\n  \"title\":       \"Required. Display title.\",\n  \"subject\":     \"Required. e.g. PDHPE, Science, History, English, Commerce, Mathematics\",\n  \"year\":        10,\n  \"description\": \"Required. 1-2 sentences shown on the dashboard card.\",\n  \"accent\":      \"#hexcolour - Required. Primary colour for the card accent strip.\",\n  \"bg\":          \"#hexcolour - Required. Card background colour.\",\n  \"tags\":        [\"optional\", \"array\", \"of\", \"strings\"]\n}\n-->"
+    },
+    "githubApi": {
+      "endpoint": "PUT https://api.github.com/repos/dxrkinfuser44/presentation/contents/{path}",
+      "authHeader": "Authorization: Bearer {GITHUB_TOKEN}",
+      "body": {
+        "message": "Add presentation: {title}",
+        "content": "base64-encoded content of the HTML file",
+        "branch": "main"
+      },
+      "docs": "https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents"
+    }
+  },
+  "htmlConventions": {
+    "summary": "Conventions for producing well-formed presentation HTML files.",
+    "structure": "Use a .deck container with .slide children. Each slide is full-viewport (100vw x 100vh). Navigation via keyboard (arrow keys) or click.",
+    "selfContained": "All CSS in a <style> tag in <head>. All JS in a <script> tag before </body>. No external files except Google Fonts CDN (acceptable).",
+    "slidePattern": "<!-- Minimal skeleton: -->\n<!doctype html>\n<!--@presentation { ... } -->\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Title</title>\n    <style>\n      * { margin: 0; padding: 0; box-sizing: border-box; }\n      body { overflow: hidden; }\n      .deck { position: relative; width: 100vw; height: 100vh; }\n      .slide { position: absolute; inset: 0; display: flex; flex-direction: column;\n               justify-content: center; align-items: center;\n               opacity: 0; pointer-events: none; transition: opacity 0.4s; }\n      .slide.active { opacity: 1; pointer-events: auto; }\n    </style>\n  </head>\n  <body>\n    <div class=\"deck\">\n      <div class=\"slide active\">Slide 1</div>\n      <div class=\"slide\">Slide 2</div>\n    </div>\n    <script>\n      const slides = document.querySelectorAll('.slide')\n      let current = 0\n      function go(n) {\n        slides[current].classList.remove('active')\n        current = Math.max(0, Math.min(n, slides.length - 1))\n        slides[current].classList.add('active')\n      }\n      document.addEventListener('keydown', e => {\n        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(current + 1)\n        if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(current - 1)\n      })\n    </script>\n  </body>\n</html>",
+    "agentHiddenComments": "You MAY include HTML comments throughout the file as agent-readable documentation. These are invisible to the human audience in the browser. Use them to document slide purpose, data sources, or instructions for future agents editing the file."
+  },
+  "subjectList": ["PDHPE", "Science", "History", "English", "Commerce", "Mathematics", "Physics"],
+  "yearGroups": [7, 8, 9, 10, 11, 12],
+  "filePathPattern": "html/year{year}/{subject-lowercase-hyphens}/{presentation-slug}.html"
+}

@@ -1,0 +1,50 @@
+# dxrkinfuser44/presentation
+
+> A self-hosted interactive presentation system built as a static GitHub Pages site.
+
+## What this is
+
+A dashboard that lists school presentations (Year 10 currently) and serves them directly as fullscreen interactive HTML files. The site is fully static — no server, no database. GitHub Actions rebuilds the dashboard automatically on every push.
+
+## API
+
+All endpoints are static JSON files. There are no POST endpoints on this domain.
+
+- Manifest (all presentations): https://dxrkinfuser44.github.io/presentation/api/manifest.json
+- OpenAPI spec: https://dxrkinfuser44.github.io/presentation/api/spec.json
+- Agent guide (this file in JSON form): https://dxrkinfuser44.github.io/presentation/api/agent-guide.json
+
+## How to add a presentation (agent instructions)
+
+1. Produce a self-contained HTML file. All CSS and JS must be inline.
+2. Add the @presentation metadata comment immediately after <!doctype html> (second line of file).
+3. File path convention: html/year{N}/{subject}/{slug}.html
+4. Commit via GitHub Contents API: PUT https://api.github.com/repos/dxrkinfuser44/presentation/contents/{path}
+5. GitHub Actions auto-deploys in ~60 seconds. No other config needed.
+
+## Metadata block format (required in every presentation HTML)
+
+<!--@presentation
+{
+  "title":       "Display title",
+  "subject":     "PDHPE | Science | History | English | Commerce | Mathematics | Physics",
+  "year":        10,
+  "description": "1-2 sentence description for the dashboard card.",
+  "accent":      "#hexcolour",
+  "bg":          "#hexcolour",
+  "tags":        ["optional", "tags"]
+}
+-->
+
+## HTML conventions
+
+- .deck container with .slide children, each 100vw x 100vh
+- Keyboard navigation: ArrowRight/Down advances, ArrowLeft/Up goes back
+- Google Fonts CDN is acceptable. No other external assets.
+- Agent-readable HTML comments are encouraged for documentation inside slide files.
+
+## Links
+
+- Repo: https://github.com/dxrkinfuser44/presentation
+- Dashboard: https://dxrkinfuser44.github.io/presentation/
+- GitHub Contents API docs: https://docs.github.com/en/rest/repos/contents
